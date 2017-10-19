@@ -1,0 +1,27 @@
+<!ELEMENT fichier (header,collMess)>
+    <!ELEMENT header (nbMessages,institution) >
+        <!ATTLIST header id ID #REQUIRED >
+
+        <!ELEMENT nbMessages (#PCDATA)>
+        <!ELEMENT institution (#PCDATA)>
+    <!ELEMENT collMess (message*)>
+        <!ELEMENT message (mailDest*, mailExp?,(information|autorisation|demande|reponse))>
+            <!ATTLIST messageId ID #REQUIRED>
+
+            <!ELEMENT mailDest (#PCDATA)>
+            <!ELEMENT mailExp (#PCDATA)>
+            <!ELEMENT information (sujet,dateDebut,duree,contenuTexte)>
+                <!ELEMENT contenuTexte (#PCDATA)>
+                <!ELEMENT duree (#PCDATA)>
+                <!ELEMENT sujet (#PCDATA)>
+                <!ELEMENT dateDebut (#PCDATA)>
+            <!ELEMENT autorisation (autorisationID, dateDebut, duree)>
+                <!ELEMENT autorisationID (#PCDATA)>
+            <!ELEMENT demande (sujet,dateDebut,duree)>
+                <!ATTLIST authId ID (#REQUIRED) >
+                <!ATTLIST dateSign (#REQUIRED #PCDATA)>
+            <!ELEMENT reponse (sujet, contenuTexte) >
+                <!ATTLIST messageId IDREF (#REQUIRED)>
+                <!ATTLIST reponseId ID (#REQUIRED)>
+
+

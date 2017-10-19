@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <xs:element name="fichier">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="header" type="xs:complexType">
+                    <xs:attribute name="fileId" type="xs:ID" use="required"/>
+                    <xs:sequence>
+                        <xs:element name="nbMessages" type="xs:positiveInteger"/>
+                        <xs:element name="institution" type="xs:string"/>
+                    </xs:sequence>
+                </xs:element>
+
+                <xs:element name="collMess" type="xs:complexType">
+                    <xs:sequence>
+                        <xs:element name="message" minOccurs="0" maxOccurs="unbounded" type="xs:complexType">
+                            <xs:attribute name="messageId" type="xs:ID" use="required"/>
+                            <xs:sequence>
+                                <xs:element name="mailDest" minOccurs="0" maxOccurs="unbounded" type="email"/>
+                                <xs:element name="mailExp" minOccurs="0" type="email"/>
+                                <xs:choice>
+                                    <xs:element name="information" type="information"
+                                </xs:choice>
+                            </xs:sequence>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="email">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <!ELEMENT message (mailDest*, mailExp?,(information|autorisation|demande|reponse))>
+    <!ATTLIST messageId ID #REQUIRED>
+
+    <!ELEMENT mailDest (#PCDATA)>
+    <!ELEMENT mailExp (#PCDATA)>
+    <!ELEMENT information (sujet,dateDebut,duree,contenuTexte)>
+    <!ELEMENT contenuTexte (#PCDATA)>
+    <!ELEMENT duree (#PCDATA)>
+    <!ELEMENT sujet (#PCDATA)>
+    <!ELEMENT dateDebut (#PCDATA)>
+    <!ELEMENT autorisation (autorisationID, dateDebut, duree)>
+    <!ELEMENT autorisationID (#PCDATA)>
+    <!ELEMENT demande (sujet,dateDebut,duree)>
+    <!ATTLIST authId ID (#REQUIRED) >
+    <!ATTLIST dateSign (#REQUIRED #PCDATA)>
+    <!ELEMENT reponse (sujet, contenuTexte) >
+    <!ATTLIST messageId IDREF (#REQUIRED)>
+    <!ATTLIST reponseId ID (#REQUIRED)>
+
+
+    <xs:complexType name="information">
+        <xs:sequence>
+            <xs:element name="sujet">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dateDebut" type="xs:date"/>
+            <xs:element name="duree" type="duree"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="duree">
+        <xs:choice>
+            <xs:element name="semaines" type="xs:positiveInteger"/>
+            <xs:element name="mois" type="xs:positiveInteger"/>
+        </xs:choice>
+    </xs:complexType>
