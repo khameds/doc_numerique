@@ -1,2 +1,4 @@
-Projet de Documents Numérique
-Smail KHAMED, Clément COLIN, Dimitri BRUYERE, Christopher JEAMME
+/*
+* Projet de Documents Numérique
+* Smail KHAMED, Clément COLIN, Dimitri BRUYERE, Christopher JEAMME
+*/

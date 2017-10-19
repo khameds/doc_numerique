@@ -1,3 +1,7 @@
+/*
+* Projet de Documents Numérique
+* Smail KHAMED, Clément COLIN, Dimitri BRUYERE, Christopher JEAMME
+*/
 package projetdocnumerique;
 
 /**
@@ -12,7 +16,7 @@ public class TestParser
         Message message = new Message();
 
         ParserSAX p3 = new ParserSAX();
-        MySAXHandlerChat handlerChat = new MySAXHandlerChat(chat);
+        HandlerSAX handlerChat = new HandlerSAX(chat);
 
         p3.monParsing(handlerChat, "xml/chat.xml");
     }

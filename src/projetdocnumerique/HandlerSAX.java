@@ -1,16 +1,17 @@
+/*
+* Projet de Documents Numérique
+* Smail KHAMED, Clément COLIN, Dimitri BRUYERE, Christopher JEAMME
+*/
 package projetdocnumerique;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import donnees.Chat;
-import donnees.Message;
-
 /**
  * Handler SAX de l'objet Chat
  *
  */
-public class MySAXHandlerChat extends DefaultHandler
+public class HandlerSAX extends DefaultHandler
 {	
 	Chat chat;
 	String dernierARemplir;
@@ -19,7 +20,7 @@ public class MySAXHandlerChat extends DefaultHandler
 	 * Constructeur et initialise le chat
 	 * @param chat Chat
 	 */
-	public MySAXHandlerChat(Chat chat)
+	public HandlerSAX(Chat chat)
 	{
 		this.chat = chat;
 	}

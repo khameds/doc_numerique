@@ -4,22 +4,21 @@
 */
 package projetdocnumerique;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * 
+ *
  * @author Chris
  */
-public class Message
+
+public class ListeMessage
 {
-    TypeMessage typeMessage;
+    List<Message> listeMessage;
     
-    public Message()
+    public ListeMessage()
     {
-        
+        listeMessage = new ArrayList<>();
     }
     
-    public Message(TypeMessage type)
-    {
-        this();
-        typeMessage = type;
-    }
 }
