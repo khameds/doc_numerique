@@ -112,3 +112,4 @@
             <xs:element name="mois" type="xs:positiveInteger"/>
         </xs:choice>
     </xs:complexType>
+</xs:schema>
