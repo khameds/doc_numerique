@@ -22,7 +22,7 @@ public class HandlerSAX extends DefaultHandler
 	 */
 	public HandlerSAX(Document doc)
 	{
-		this.doc = doc;
+            this.doc = doc;
 	}
 	
 	/* (non-Javadoc)
@@ -40,7 +40,7 @@ public class HandlerSAX extends DefaultHandler
         @Override
 	public void endDocument()
 	{
-		System.out.println("Fichier termin�");
+		System.out.println("Fichier termine");
 		System.out.println();
 	}
 	
@@ -53,25 +53,10 @@ public class HandlerSAX extends DefaultHandler
 		if(qName.compareTo("message")==0)
 		{
 			System.out.println("Nouveau message");
-			chat.ajouterMessage(new Message());
-			chat.getDernierMessage().setIdUtilisateur(attributes.getValue(0));
-			chat.getDernierMessage().setIdEvenement(attributes.getValue(1));
+                        Message message = new Message();
+                        doc.addMessage(message);
+                                
 			dernierARemplir = "message";
-		}
-		if(qName.compareTo("date")==0)
-		{
-			System.out.println("Date");
-			dernierARemplir = "date";
-		}
-		if(qName.compareTo("auteur")==0)
-		{
-			System.out.println("Auteur");
-			dernierARemplir = "auteur";
-		}
-		if(qName.compareTo("texte")==0)
-		{
-			System.out.println("Texte");
-			dernierARemplir = "texte";
 		}
 	}
 
@@ -94,26 +79,12 @@ public class HandlerSAX extends DefaultHandler
 			contenu = contenu.concat(ch[i]+"");
 		}
 		
-		if(dernierARemplir.compareTo("date")==0)
-		{
-			dernierARemplir = "";
-			System.out.println("Remplissage de date: "+contenu);
-			Message last = chat.getDernierMessage();
-			last.setDate(contenu);
-		}
-		if(dernierARemplir.compareTo("auteur")==0)
-		{
-			dernierARemplir = "";
-			System.out.println("Remplissage de l'auteur: "+contenu);
-			Message last = chat.getDernierMessage();
-			last.setIdUtilisateur(contenu);
-		}
 		if(dernierARemplir.compareTo("texte")==0)
 		{
-			dernierARemplir = "";
+			/*dernierARemplir = "";
 			System.out.println("Remplissage du texte: "+contenu);
 			Message last = chat.getDernierMessage();
-			last.setTexte(contenu);
+			last.setTexte(contenu);*/
 		}
 	}
 }
