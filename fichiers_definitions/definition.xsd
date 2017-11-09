@@ -20,7 +20,10 @@
                                 <xs:element name="mailDest" minOccurs="0" maxOccurs="unbounded" type="email"/>
                                 <xs:element name="mailExp" minOccurs="0" type="email"/>
                                 <xs:choice>
-                                    <xs:element name="information" type="information"
+                                    <xs:element name="information" type="information"/>
+                                    <xs:element name="autorisation" type="autorisation"/>
+                                    <xs:element name="demande" type="demande"/>
+                                    <xs:element name="reponse" type="reponse"/>
                                 </xs:choice>
                             </xs:sequence>
                         </xs:element>
@@ -37,28 +40,37 @@
         </xs:restriction>
     </xs:simpleType>
 
-
-    <!ELEMENT message (mailDest*, mailExp?,(information|autorisation|demande|reponse))>
-    <!ATTLIST messageId ID #REQUIRED>
-
-    <!ELEMENT mailDest (#PCDATA)>
-    <!ELEMENT mailExp (#PCDATA)>
-    <!ELEMENT information (sujet,dateDebut,duree,contenuTexte)>
-    <!ELEMENT contenuTexte (#PCDATA)>
-    <!ELEMENT duree (#PCDATA)>
-    <!ELEMENT sujet (#PCDATA)>
-    <!ELEMENT dateDebut (#PCDATA)>
-    <!ELEMENT autorisation (autorisationID, dateDebut, duree)>
-    <!ELEMENT autorisationID (#PCDATA)>
-    <!ELEMENT demande (sujet,dateDebut,duree)>
-    <!ATTLIST authId ID (#REQUIRED) >
-    <!ATTLIST dateSign (#REQUIRED #PCDATA)>
-    <!ELEMENT reponse (sujet, contenuTexte) >
-    <!ATTLIST messageId IDREF (#REQUIRED)>
-    <!ATTLIST reponseId ID (#REQUIRED)>
-
-
     <xs:complexType name="information">
+        <xs:sequence>
+            <xs:element name="sujet">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element name="contenuTexte">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100000"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dateDebut" type="xs:date"/>
+            <xs:element name="duree" type="duree"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="autorisation">
+        <xs:sequence>
+            <xs:element name="autorisationID" type="xs:positiveInteger"/>
+            <xs:element name="dateDebut" type="xs:date"/>
+            <xs:element name="duree" type="duree"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="demande">
+        <xs:attribute name="authId" type="xs:ID" use="required"/>
+        <xs:attribute name="dateSign" type="xs:date" use="required"/>
         <xs:sequence>
             <xs:element name="sujet">
                 <xs:simpleType>
@@ -69,7 +81,26 @@
             </xs:element>
             <xs:element name="dateDebut" type="xs:date"/>
             <xs:element name="duree" type="duree"/>
+        </xs:sequence>
+    </xs:complexType>
 
+    <xs:complexType name="reponse">
+        <xs:attribute name="messageId" type="xs:ID" use="required"/>
+        <xs:attribute name="reponseId" type="xs:ID" use="required"/>
+        <xs:sequence>
+            <xs:element name="sujet">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element name="contenuTexte">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100000"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
