@@ -34,82 +34,94 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:simpleType name="email">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
-        </xs:restriction>
-    </xs:simpleType>
+    <xs:element name="email">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:pattern value="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
 
-    <xs:complexType name="information">
-        <xs:sequence>
-            <xs:element name="sujet">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="contenuTexte">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100000"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="dateDebut" type="xs:date"/>
-            <xs:element name="duree" type="duree"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="information">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sujet">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="contenuTexte">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="100000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="dateDebut" type="xs:date"/>
+                <xs:element name="duree" type="duree"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="autorisation">
-        <xs:sequence>
-            <xs:element name="autorisationID" type="xs:positiveInteger"/>
-            <xs:element name="dateDebut" type="xs:date"/>
-            <xs:element name="duree" type="duree"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="autorisation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="autorisationID" type="xs:positiveInteger"/>
+                <xs:element name="dateDebut" type="xs:date"/>
+                <xs:element name="duree" type="duree"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="demande">
-        <xs:attribute name="authId" type="xs:ID" use="required"/>
-        <xs:attribute name="dateSign" type="xs:date" use="required"/>
-        <xs:sequence>
-            <xs:element name="sujet">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="dateDebut" type="xs:date"/>
-            <xs:element name="duree" type="duree"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="demande">
+        <xs:complexType>
+            <xs:attribute name="authId" type="xs:ID" use="required"/>
+            <xs:attribute name="dateSign" type="xs:date" use="required"/>
+            <xs:sequence>
+                <xs:element name="sujet">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="dateDebut" type="xs:date"/>
+                <xs:element name="duree" type="duree"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="reponse">
-        <xs:attribute name="messageId" type="xs:ID" use="required"/>
-        <xs:attribute name="reponseId" type="xs:ID" use="required"/>
-        <xs:sequence>
-            <xs:element name="sujet">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="contenuTexte">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100000"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="reponse">
+        <xs:complexType">
+            <xs:attribute name="messageId" type="xs:ID" use="required"/>
+            <xs:attribute name="reponseId" type="xs:ID" use="required"/>
+            <xs:sequence>
+                <xs:element name="sujet">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="contenuTexte">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="100000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="duree">
-        <xs:choice>
-            <xs:element name="semaines" type="xs:positiveInteger"/>
-            <xs:element name="mois" type="xs:positiveInteger"/>
-        </xs:choice>
-    </xs:complexType>
+    <xs:element name="duree">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="semaines" type="xs:positiveInteger"/>
+                <xs:element name="mois" type="xs:positiveInteger"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>
