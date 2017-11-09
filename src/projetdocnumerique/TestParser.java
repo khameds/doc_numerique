@@ -13,11 +13,11 @@ public class TestParser
 
     public static void main(String[] args)
     {
-        Message message = new Message();
+        Document doc = new Document();
 
-        ParserSAX p3 = new ParserSAX();
-        HandlerSAX handlerChat = new HandlerSAX(chat);
+        ParserSAX p = new ParserSAX();
+        HandlerSAX handlerFichier = new HandlerSAX(doc);
 
-        p3.monParsing(handlerChat, "xml/chat.xml");
+        p.monParsing(handlerFichier, "xml/chat.xml");
     }
 }

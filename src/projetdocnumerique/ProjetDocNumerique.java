@@ -7,7 +7,7 @@ package projetdocnumerique;
 
 /**
  *
- * @author Tony
+ * @author Chris
  */
 public class ProjetDocNumerique
 {

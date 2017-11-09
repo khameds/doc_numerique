@@ -8,34 +8,36 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Handler SAX de l'objet Chat
+ * Handler SAX de l'objet Fichier
  *
  */
 public class HandlerSAX extends DefaultHandler
 {	
-	Chat chat;
+	Document doc;
 	String dernierARemplir;
 	
 	/**
-	 * Constructeur et initialise le chat
-	 * @param chat Chat
+	 * Constructeur et initialise le fichier
+         * @param doc
 	 */
-	public HandlerSAX(Chat chat)
+	public HandlerSAX(Document doc)
 	{
-		this.chat = chat;
+		this.doc = doc;
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.xml.sax.helpers.DefaultHandler#startDocument()
 	 */
+        @Override
 	public void startDocument()
 	{
-		System.out.println("D�but fichier:\n\n");
+		System.out.println("Debut fichier:\n\n");
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.xml.sax.helpers.DefaultHandler#endDocument()
 	 */
+        @Override
 	public void endDocument()
 	{
 		System.out.println("Fichier termin�");
@@ -45,9 +47,10 @@ public class HandlerSAX extends DefaultHandler
 	/* (non-Javadoc)
 	 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
+        @Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes)
 	{
-		if(qName=="message")
+		if(qName.compareTo("message")==0)
 		{
 			System.out.println("Nouveau message");
 			chat.ajouterMessage(new Message());
@@ -55,17 +58,17 @@ public class HandlerSAX extends DefaultHandler
 			chat.getDernierMessage().setIdEvenement(attributes.getValue(1));
 			dernierARemplir = "message";
 		}
-		if(qName=="date")
+		if(qName.compareTo("date")==0)
 		{
 			System.out.println("Date");
 			dernierARemplir = "date";
 		}
-		if(qName=="auteur")
+		if(qName.compareTo("auteur")==0)
 		{
 			System.out.println("Auteur");
 			dernierARemplir = "auteur";
 		}
-		if(qName=="texte")
+		if(qName.compareTo("texte")==0)
 		{
 			System.out.println("Texte");
 			dernierARemplir = "texte";
@@ -91,21 +94,21 @@ public class HandlerSAX extends DefaultHandler
 			contenu = contenu.concat(ch[i]+"");
 		}
 		
-		if(dernierARemplir == "date")
+		if(dernierARemplir.compareTo("date")==0)
 		{
 			dernierARemplir = "";
 			System.out.println("Remplissage de date: "+contenu);
 			Message last = chat.getDernierMessage();
 			last.setDate(contenu);
 		}
-		if(dernierARemplir == "auteur")
+		if(dernierARemplir.compareTo("auteur")==0)
 		{
 			dernierARemplir = "";
 			System.out.println("Remplissage de l'auteur: "+contenu);
 			Message last = chat.getDernierMessage();
 			last.setIdUtilisateur(contenu);
 		}
-		if(dernierARemplir == "texte")
+		if(dernierARemplir.compareTo("texte")==0)
 		{
 			dernierARemplir = "";
 			System.out.println("Remplissage du texte: "+contenu);
