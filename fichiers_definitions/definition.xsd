@@ -48,7 +48,8 @@
                         <xs:maxLength value="100"/>
                     </xs:restriction>
                 </xs:simpleType>
-            </xs:element name="contenuTexte">
+            </xs:element>
+            <xs:element name="contenuTexte">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="100000"/>
@@ -94,7 +95,8 @@
                         <xs:maxLength value="100"/>
                     </xs:restriction>
                 </xs:simpleType>
-            </xs:element name="contenuTexte">
+            </xs:element>
+            <xs:element name="contenuTexte">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="100000"/>
