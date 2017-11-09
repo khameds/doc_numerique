@@ -94,7 +94,7 @@
     </xs:element>
 
     <xs:element name="reponse">
-        <xs:complexType">
+        <xs:complexType>
             <xs:attribute name="messageId" type="xs:ID" use="required"/>
             <xs:attribute name="reponseId" type="xs:ID" use="required"/>
             <xs:sequence>
