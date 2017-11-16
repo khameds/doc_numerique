@@ -111,6 +111,22 @@ public class HandlerSAX extends DefaultHandler
         {
             dernierTypeMessage = TypeMessage.INFORMATION;
             message.setTypeMessage(dernierTypeMessage);
+            //TODO On va fixer directement information dedans et on modifiera directement dedans pour la suite
+        }
+
+        if(qName.compareTo("sujet")==0)
+        {
+            dernierARemplir = "sujet";
+        }
+        
+        if(qName.compareTo("contenuTexte")==0)
+        {
+            dernierARemplir = "contenuTexte";
+        }
+        
+        if(qName.compareTo("dateDebut")==0)
+        {
+            dernierARemplir = "dateDebut";
         }
         
         //Pour le type autorisation
@@ -121,6 +137,8 @@ public class HandlerSAX extends DefaultHandler
             message.setTypeMessage(dernierTypeMessage);
         }
         
+        //TODO
+        
         //Pour le type demande
         
         if(qName.compareTo("demande")==0)
@@ -129,6 +147,8 @@ public class HandlerSAX extends DefaultHandler
             message.setTypeMessage(dernierTypeMessage);
         }        
         
+        //TODO
+        
         //Pour le type reponse
         
         if(qName.compareTo("reponse")==0)
@@ -136,6 +156,8 @@ public class HandlerSAX extends DefaultHandler
             dernierTypeMessage = TypeMessage.REPONSE;
             message.setTypeMessage(dernierTypeMessage);
         }
+        
+        //TODO
         
     }
 
@@ -195,13 +217,40 @@ public class HandlerSAX extends DefaultHandler
             message.setMailExp(contenu);
         }
         
-
-        if(dernierARemplir.compareTo("texte")==0)
+        //Pour le type INFORMATION
+        
+        if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
         {
-            /*dernierARemplir = "";
-            System.out.println("Remplissage du texte: "+contenu);
-            Message last = chat.getDernierMessage();
-            last.setTexte(contenu);*/
+            
         }
+        
+        if(dernierARemplir.compareTo("contenuTexte")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
+        {
+            
+        }
+        
+        if(dernierARemplir.compareTo("dateDebut")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
+        {
+            
+        }
+        
+        //Pour le type DEMANDE
+        
+        if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
+        {
+            
+        }
+        
+            //SUITE DEMANDE ICI
+        
+        //Pour le type REPONSE
+        
+        if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.REPONSE)
+        {
+            
+        }
+        
+            //SUITE REPONSE ICI
+        
     }
 }
