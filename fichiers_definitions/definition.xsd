@@ -1,45 +1,23 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    
-    <xs:element name="fichier">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="header" type="xs:complexType">
-                    <xs:attribute name="fileId" type="xs:ID" use="required"/>
-                    <xs:sequence>
-                        <xs:element name="nbMessages" type="xs:positiveInteger"/>
-                        <xs:element name="institution" type="xs:string"/>
-                    </xs:sequence>
-                </xs:element>
 
-                <xs:element name="collMess" type="xs:complexType">
-                    <xs:sequence>
-                        <xs:element name="message" minOccurs="0" maxOccurs="unbounded" type="xs:complexType">
-                            <xs:attribute name="messageId" type="xs:ID" use="required"/>
-                            <xs:sequence>
-                                <xs:element name="mailDest" minOccurs="0" maxOccurs="unbounded" type="email"/>
-                                <xs:element name="mailExp" minOccurs="0" type="email"/>
-                                <xs:choice>
-                                    <xs:element name="information" type="information"/>
-                                    <xs:element name="autorisation" type="autorisation"/>
-                                    <xs:element name="demande" type="demande"/>
-                                    <xs:element name="reponse" type="reponse"/>
-                                </xs:choice>
-                            </xs:sequence>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:element>
-
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
 
     <xs:element name="email">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:pattern value="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
+                <xs:pattern
+                        value="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
             </xs:restriction>
         </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="duree">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="semaines" type="xs:positiveInteger"/>
+                <xs:element name="mois" type="xs:positiveInteger"/>
+            </xs:choice>
+        </xs:complexType>
     </xs:element>
 
     <xs:element name="information">
@@ -60,7 +38,7 @@
                     </xs:simpleType>
                 </xs:element>
                 <xs:element name="dateDebut" type="xs:date"/>
-                <xs:element name="duree" type="duree"/>
+                <xs:element ref="duree"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -70,15 +48,13 @@
             <xs:sequence>
                 <xs:element name="autorisationID" type="xs:positiveInteger"/>
                 <xs:element name="dateDebut" type="xs:date"/>
-                <xs:element name="duree" type="duree"/>
+                <xs:element ref="duree"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="demande">
         <xs:complexType>
-            <xs:attribute name="authId" type="xs:ID" use="required"/>
-            <xs:attribute name="dateSign" type="xs:date" use="required"/>
             <xs:sequence>
                 <xs:element name="sujet">
                     <xs:simpleType>
@@ -88,15 +64,15 @@
                     </xs:simpleType>
                 </xs:element>
                 <xs:element name="dateDebut" type="xs:date"/>
-                <xs:element name="duree" type="duree"/>
+                <xs:element ref="duree"/>
             </xs:sequence>
+            <xs:attribute name="authId" type="xs:ID" use="required"/>
+            <xs:attribute name="dateSign" type="xs:date" use="required"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="reponse">
         <xs:complexType>
-            <xs:attribute name="messageId" type="xs:ID" use="required"/>
-            <xs:attribute name="reponseId" type="xs:ID" use="required"/>
             <xs:sequence>
                 <xs:element name="sujet">
                     <xs:simpleType>
@@ -113,15 +89,47 @@
                     </xs:simpleType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="messageId" type="xs:ID" use="required"/>
+            <xs:attribute name="reponseId" type="xs:ID" use="required"/>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="duree">
+
+    <xs:element name="fichier">
         <xs:complexType>
-            <xs:choice>
-                <xs:element name="semaines" type="xs:positiveInteger"/>
-                <xs:element name="mois" type="xs:positiveInteger"/>
-            </xs:choice>
+            <xs:sequence>
+                <xs:element name="header">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="nbMessages" type="xs:positiveInteger"/>
+                            <xs:element name="institution" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+
+                </xs:element>
+                <xs:element name="collMess">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="message" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element minOccurs="0" maxOccurs="unbounded" ref="email"/>
+                                        <xs:element minOccurs="0" ref="email"/>
+                                        <xs:choice>
+                                            <xs:element ref="information"/>
+                                            <xs:element ref="autorisation"/>
+                                            <xs:element ref="demande"/>
+                                            <xs:element ref="reponse"/>
+                                        </xs:choice>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="messageId" type="xs:ID"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="fileId" type="xs:ID"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
