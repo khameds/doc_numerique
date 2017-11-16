@@ -14,22 +14,23 @@ public class Document
 {
     private int id;
     
-    private int nombreMessage;
-    private Institution institution;
+    private int nombreMessageAnnonce;
+    private Institution institutionOrigine;
     private ArrayList<Message> listeMessage;
     
     public Document()
     {
-        
+        listeMessage = new ArrayList<>();
     }
     
     public Document(int id)
     {
+        this();
         this.id = id;
     }
     
     public void addMessage(Message m)
-    {
+    {     
         listeMessage.add(m);
     }
     
@@ -50,21 +51,26 @@ public class Document
 
     public int getNombreMessage()
     {
-        return nombreMessage;
+        return listeMessage.size();
+    }
+    
+    public int getNombreMessageAnnonce()
+    {
+        return nombreMessageAnnonce;
     }
 
-    public void setNombreMessage(int nombreMessage)
+    public void setNombreMessageAnnonce(int nombreMessage)
     {
-        this.nombreMessage = nombreMessage;
+        this.nombreMessageAnnonce = nombreMessage;
     }
 
     public Institution getInstitution()
     {
-        return institution;
+        return institutionOrigine;
     }
 
     public void setInstitution(Institution institution)
     {
-        this.institution = institution;
+        this.institutionOrigine = institution;
     }
 }
