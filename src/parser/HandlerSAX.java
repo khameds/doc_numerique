@@ -6,6 +6,8 @@ package parser;
 
 import data.Message;
 import data.Document;
+import data.Institution;
+import data.TypeMessage;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -15,79 +17,191 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class HandlerSAX extends DefaultHandler
 {	
-	Document doc;
-	String dernierARemplir;
-	
-	/**
-	 * Constructeur et initialise le fichier
-         * @param doc
-	 */
-	public HandlerSAX(Document doc)
-	{
-            this.doc = doc;
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.xml.sax.helpers.DefaultHandler#startDocument()
-	 */
-        @Override
-	public void startDocument()
-	{
-		System.out.println("Debut fichier:\n\n");
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.xml.sax.helpers.DefaultHandler#endDocument()
-	 */
-        @Override
-	public void endDocument()
-	{
-		System.out.println("Fichier termine");
-		System.out.println();
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
-	 */
-        @Override
-	public void startElement(String uri, String localName, String qName, Attributes attributes)
-	{
-		if(qName.compareTo("message")==0)
-		{
-			System.out.println("Nouveau message");
-                        Message message = new Message();
-                        doc.addMessage(message);
-                                
-			dernierARemplir = "message";
-		}
-                System.out.println("Debut de "+qName);
-	}
+    /**
+     * Document que l'on va remplir
+     */
+    Document doc;
+    /**
+     * Objet qui va temporairement stocker un message avant son ajout au doc
+     */
+    Message message;
+    /**
+     * Dernière balise ouverte
+     */
+    String dernierARemplir = "";
+    /**
+     * Type du dernier message
+     */
+    TypeMessage dernierTypeMessage;
 
-	/* (non-Javadoc)
-	 * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
-	 */
-	public void endElement(String uri, String localName, String qName)
-	{
-                System.out.println("Fin de "+qName);
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
-	 */
-	public void characters(char[] ch, int start, int length)
-	{
-		String contenu = "";
-		for(int i=start; i<start+length; i++)
-		{
-			contenu = contenu.concat(ch[i]+"");
-		}
-		
-		if(dernierARemplir.compareTo("texte")==0)
-		{
-			/*dernierARemplir = "";
-			System.out.println("Remplissage du texte: "+contenu);
-			Message last = chat.getDernierMessage();
-			last.setTexte(contenu);*/
-		}
-	}
+    /**
+     * Constructeur et initialise le fichier
+     * @param doc
+     */
+    public HandlerSAX(Document doc)
+    {
+        this.doc = doc;
+    }
+
+    /* (non-Javadoc)
+     * @see org.xml.sax.helpers.DefaultHandler#startDocument()
+     */
+    @Override
+    public void startDocument()
+    {
+        System.out.println("-- Debut fichier --\n\n");
+    }
+
+    /* (non-Javadoc)
+     * @see org.xml.sax.helpers.DefaultHandler#endDocument()
+     */
+    @Override
+    public void endDocument()
+    {
+        System.out.println("-- Fichier termine --");
+        System.out.println();
+    }
+
+    /* (non-Javadoc)
+     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+     */
+    @Override
+    public void startElement(String uri, String localName, String qName, Attributes attributes)
+    {
+        //System.out.println("Debut de la balise "+qName);
+        
+        if(qName.compareTo("header")==0)
+        {
+            //On fixe fileID
+            doc.setId(Integer.valueOf(attributes.getValue("fileID")));        
+            dernierARemplir = "header";
+        }
+        
+        if(qName.compareTo("nbMessages")==0)
+        {      
+            dernierARemplir = "nbMessages";
+        }
+
+        if(qName.compareTo("institution")==0)
+        {      
+            dernierARemplir = "institution";
+        }
+        
+        if(qName.compareTo("message")==0)
+        {
+            message = new Message();
+            //On fixe l'id du message
+            message.setId(Integer.valueOf(attributes.getValue("messageId")));
+            dernierARemplir = "message";
+        }
+        
+        if(qName.compareTo("mailDest")==0)
+        {
+            dernierARemplir = "mailDest";
+        }
+        
+        if(qName.compareTo("mailExp")==0)
+        {
+            dernierARemplir = "mailExp";
+        }
+        
+        //Pour le type information
+                
+        if(qName.compareTo("information")==0)
+        {
+            dernierTypeMessage = TypeMessage.INFORMATION;
+            message.setTypeMessage(dernierTypeMessage);
+        }
+        
+        //Pour le type autorisation
+        
+        if(qName.compareTo("autorisation")==0)
+        {
+            dernierTypeMessage = TypeMessage.AUTORISATION;
+            message.setTypeMessage(dernierTypeMessage);
+        }
+        
+        //Pour le type demande
+        
+        if(qName.compareTo("demande")==0)
+        {
+            dernierTypeMessage = TypeMessage.DEMANDE;
+            message.setTypeMessage(dernierTypeMessage);
+        }        
+        
+        //Pour le type reponse
+        
+        if(qName.compareTo("reponse")==0)
+        {
+            dernierTypeMessage = TypeMessage.REPONSE;
+            message.setTypeMessage(dernierTypeMessage);
+        }
+        
+    }
+
+    /* (non-Javadoc)
+     * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+     */
+    public void endElement(String uri, String localName, String qName)
+    {
+        //System.out.println("Fin de "+qName);
+        if(qName.compareTo("message")==0)
+        {
+            //On ajoute le message au doc maintenant qu'il est remplit
+            doc.addMessage(message);
+            dernierARemplir = "";
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
+     */
+    public void characters(char[] ch, int start, int length)
+    {
+        //Récupération du contenu de la balise
+        String contenu = "";
+        for(int i=start; i<start+length; i++)
+        {
+            contenu = contenu.concat(ch[i]+"");
+        }
+        
+        //Traitement
+       
+        if(dernierARemplir.compareTo("nbMessages")==0)
+        {
+            dernierARemplir = "";
+            //On fixe le nombre de message annoncé
+            doc.setNombreMessageAnnonce(Integer.valueOf(contenu));
+        }
+        
+        if(dernierARemplir.compareTo("institution")==0)
+        {
+            dernierARemplir = "";
+            //On fixe l'institution qui émet ce fichier
+            doc.setInstitution(new Institution(contenu));
+        }
+            
+        if(dernierARemplir.compareTo("mailDest")==0)
+        {
+            dernierARemplir = "";
+            //On fixe le mail du destinataire
+            message.setMailDest(contenu);
+        }
+        
+        if(dernierARemplir.compareTo("mailExp")==0)
+        {
+            dernierARemplir = "";
+            //On fixe le mail de l'expéditeur
+            message.setMailExp(contenu);
+        }
+        
+
+        if(dernierARemplir.compareTo("texte")==0)
+        {
+            /*dernierARemplir = "";
+            System.out.println("Remplissage du texte: "+contenu);
+            Message last = chat.getDernierMessage();
+            last.setTexte(contenu);*/
+        }
+    }
 }
