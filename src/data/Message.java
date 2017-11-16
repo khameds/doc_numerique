@@ -116,7 +116,7 @@ public class Message
         String ajout = "";
         if(autorisation==null&&demande==null&&reponse==null&&information==null)
         {
-            ajout = "(Impossible d'afficher le message : Type non défini)";
+            ajout = "(Impossible d'afficher le message)";
         }
         else
         {
@@ -135,7 +135,7 @@ public class Message
                     ajout = demande.toString();
                     break;
                 default:
-                    ajout = "(Impossible d'afficher le message : Type non défini)";
+                    ajout = "(Impossible d'afficher le message)";
                     break;
             }
         }
