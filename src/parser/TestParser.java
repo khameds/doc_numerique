@@ -2,7 +2,9 @@
 * Projet de Documents Numérique
 * Smail KHAMED, Clément COLIN, Dimitri BRUYERE, Christopher JEAMME
 */
-package projetdocnumerique;
+package parser;
+
+import data.Document;
 
 /**
  * Sert aux tests sur le XML et les parsers
@@ -18,6 +20,7 @@ public class TestParser
         ParserSAX p = new ParserSAX();
         HandlerSAX handlerFichier = new HandlerSAX(doc);
 
-        p.monParsing(handlerFichier, "xml/chat.xml");
+        p.monParsing(handlerFichier, "fichiers_definitions/test.xml");
+        System.out.println("OK");
     }
 }

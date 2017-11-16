@@ -2,8 +2,10 @@
 * Projet de Documents Numérique
 * Smail KHAMED, Clément COLIN, Dimitri BRUYERE, Christopher JEAMME
 */
-package projetdocnumerique;
+package parser;
 
+import data.Message;
+import data.Document;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -58,6 +60,7 @@ public class HandlerSAX extends DefaultHandler
                                 
 			dernierARemplir = "message";
 		}
+                System.out.println("Debut de "+qName);
 	}
 
 	/* (non-Javadoc)
@@ -65,7 +68,7 @@ public class HandlerSAX extends DefaultHandler
 	 */
 	public void endElement(String uri, String localName, String qName)
 	{
-		
+                System.out.println("Fin de "+qName);
 	}
 	
 	/* (non-Javadoc)

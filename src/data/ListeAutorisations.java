@@ -2,7 +2,7 @@
 * Projet de Documents Numérique
 * Smail KHAMED, Clément COLIN, Dimitri BRUYERE, Christopher JEAMME
  */
-package projetdocnumerique;
+package data;
 
 import java.util.ArrayList;
 import java.util.List;
