@@ -1,4 +1,5 @@
-<fichier>
+<?xml version="1.0" encoding="UTF-8" ?>
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="fichiers_definition/definition.xsd">
     <header fileID=1>
         <nbMessages>1</nbMessages>
         <institution>L'institution du cul</institution>
