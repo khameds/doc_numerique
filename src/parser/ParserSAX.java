@@ -40,15 +40,7 @@ public class ParserSAX
 			parser = factory.newSAXParser();
 			parser.parse(new InputSource(new ByteArrayInputStream(xml.getBytes("utf-8"))), handler);
 		}
-		catch (ParserConfigurationException e)
-		{
-			e.printStackTrace();
-		}
-		catch (SAXException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
+		catch (ParserConfigurationException | SAXException | IOException e)
 		{
 			e.printStackTrace();
 		}

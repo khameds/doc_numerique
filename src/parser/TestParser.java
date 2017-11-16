@@ -12,7 +12,6 @@ import data.Document;
  */
 public class TestParser
 {
-
     public static void main(String[] args)
     {
         Document doc = new Document();
@@ -20,7 +19,6 @@ public class TestParser
         ParserSAX p = new ParserSAX();
         HandlerSAX handlerFichier = new HandlerSAX(doc);
 
-        p.monParsing(handlerFichier, "fichiers_definitions/test.xml");
-        System.out.println("OK");
+        p.monParsing(handlerFichier, "test.xml");
     }
 }
