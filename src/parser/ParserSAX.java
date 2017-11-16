@@ -1,7 +1,9 @@
 package parser;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -16,33 +18,34 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class ParserSAX
 {
-	/**
-	 * Constructeur vide
-	 */
-	public ParserSAX()
-	{
+    /**
+     * Constructeur vide
+     */
+    public ParserSAX()
+    {
 
-	}
-	
-	/**
-	 * Cr�e le parser
-	 * @param handler DefaultHandler
-	 * @param xml String
-	 */
-	public void monParsing(DefaultHandler handler, String xml)
-	{
-		SAXParserFactory factory= SAXParserFactory.newInstance();
-		factory.setValidating(true);
-		SAXParser parser;
-		
-		try
-		{
-			parser = factory.newSAXParser();
-			parser.parse(new InputSource(new ByteArrayInputStream(xml.getBytes("utf-8"))), handler);
-		}
-		catch (ParserConfigurationException | SAXException | IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+    }
+
+    /**
+     * Cr�e le parser
+     * @param handler DefaultHandler
+     * @param xml String
+     */
+    public void monParsing(DefaultHandler handler, String xml)
+    {
+        SAXParserFactory factory= SAXParserFactory.newInstance();
+        factory.setValidating(true);
+        SAXParser parser;
+
+        try
+        {
+            parser = factory.newSAXParser();
+            InputStream xmlInput = new FileInputStream(xml);
+            parser.parse(xmlInput, handler);
+        }
+        catch (ParserConfigurationException | SAXException | IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
