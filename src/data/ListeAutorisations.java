@@ -19,4 +19,19 @@ class ListeAutorisations
     {
         liste = new ArrayList<Autorisation>();
     }
+
+    public ArrayList getListe()
+    {
+        return liste;
+    }
+
+    public void setListe(ArrayList liste)
+    {
+        this.liste = liste;
+    }
+    
+    public void add(Autorisation a)
+    {
+        liste.add(a);
+    }
 }
