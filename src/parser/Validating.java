@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
  */
 public class Validating
 {
-    public boolean validate(String xsdPath,String xmlPath)
+    public static boolean validate(String xsdPath,String xmlPath)
     {
         File xsdFile = new File(xsdPath);
         Source xmlFile = new StreamSource(new File(xmlPath));
@@ -38,7 +38,8 @@ public class Validating
         }
         catch(SAXException e)
         {
-            System.out.println(xmlFile.getSystemId() + " non validé:" + e);
+            System.out.println(xmlFile.getSystemId() + " non validé:\n"+e);
+            //e.printStackTrace();
             return false;
         }
         catch(IOException e)

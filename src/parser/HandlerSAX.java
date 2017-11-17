@@ -80,12 +80,12 @@ public class HandlerSAX extends DefaultHandler
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes)
     {
-        System.out.println("Debut de la balise "+qName);
+        //System.out.println("Debut de la balise "+qName);
         
         if(qName.compareTo("header")==0)
         {
             //On fixe fileID
-            doc.setId(Integer.valueOf(attributes.getValue("fileID")));        
+            doc.setId(Integer.valueOf(attributes.getValue("fileId")));        
             dernierARemplir = "header";
         }
         
@@ -207,7 +207,7 @@ public class HandlerSAX extends DefaultHandler
      */
     public void endElement(String uri, String localName, String qName)
     {
-        System.out.println("Fin de "+qName);
+        //System.out.println("Fin de "+qName);
         if(qName.compareTo("message")==0)
         {
             //On ajoute le message au doc maintenant qu'il est rempli
@@ -284,7 +284,6 @@ public class HandlerSAX extends DefaultHandler
         {
             dernierARemplir = "";
             information.setSujet(contenu);
-            System.out.println("CONTENU "+contenu);
         }
         
         if(dernierARemplir.compareTo("contenuTexte")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
