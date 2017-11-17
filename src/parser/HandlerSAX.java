@@ -4,10 +4,15 @@
 */
 package parser;
 
+import data.Autorisation;
 import data.Message;
 import data.Document;
 import data.Institution;
 import data.TypeMessage;
+import data.Information;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -110,8 +115,8 @@ public class HandlerSAX extends DefaultHandler
         if(qName.compareTo("information")==0)
         {
             dernierTypeMessage = TypeMessage.INFORMATION;
+            //Ceci va également créer l'objet à l'intérieur de message
             message.setTypeMessage(dernierTypeMessage);
-            //TODO On va fixer directement information dedans et on modifiera directement dedans pour la suite
         }
 
         if(qName.compareTo("sujet")==0)
@@ -134,6 +139,7 @@ public class HandlerSAX extends DefaultHandler
         if(qName.compareTo("autorisation")==0)
         {
             dernierTypeMessage = TypeMessage.AUTORISATION;
+            //Ceci va également créer l'objet à l'intérieur de message
             message.setTypeMessage(dernierTypeMessage);
         }
         
@@ -144,6 +150,7 @@ public class HandlerSAX extends DefaultHandler
         if(qName.compareTo("demande")==0)
         {
             dernierTypeMessage = TypeMessage.DEMANDE;
+            //Ceci va également créer l'objet à l'intérieur de message
             message.setTypeMessage(dernierTypeMessage);
         }        
         
@@ -154,6 +161,7 @@ public class HandlerSAX extends DefaultHandler
         if(qName.compareTo("reponse")==0)
         {
             dernierTypeMessage = TypeMessage.REPONSE;
+            //Ceci va également créer l'objet à l'intérieur de message
             message.setTypeMessage(dernierTypeMessage);
         }
         
@@ -221,24 +229,24 @@ public class HandlerSAX extends DefaultHandler
         
         if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
         {
-            
+            message.getInformation().setSujet(contenu);
         }
         
         if(dernierARemplir.compareTo("contenuTexte")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
         {
-            
+            message.getInformation().setContenuTexte(contenu);
         }
         
         if(dernierARemplir.compareTo("dateDebut")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
         {
-            
+            message.getInformation().setDateDebut(new SimpleDateFormat(contenu));
         }
         
         //Pour le type DEMANDE
         
         if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
         {
-            
+            message.getDemande().setSujet(contenu);
         }
         
             //SUITE DEMANDE ICI
@@ -247,7 +255,7 @@ public class HandlerSAX extends DefaultHandler
         
         if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.REPONSE)
         {
-            
+            message.getReponse().setSujet(contenu);
         }
         
             //SUITE REPONSE ICI
