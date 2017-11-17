@@ -5,11 +5,13 @@
 package parser;
 
 import data.Autorisation;
+import data.Demande;
 import data.Message;
 import data.Document;
 import data.Institution;
 import data.TypeMessage;
 import data.Information;
+import data.Reponse;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,9 +29,13 @@ public class HandlerSAX extends DefaultHandler
      */
     Document doc;
     /**
-     * Objet qui va temporairement stocker un message avant son ajout au doc
+     * Objets qui vaont temporairement stocker des infos avant leur ajout au doc
      */
     Message message;
+    Information information;
+    Reponse reponse;
+    Demande demande;
+    Autorisation autorisation;
     /**
      * Dernière balise ouverte
      */
@@ -38,6 +44,7 @@ public class HandlerSAX extends DefaultHandler
      * Type du dernier message
      */
     TypeMessage dernierTypeMessage;
+    
 
     /**
      * Constructeur et initialise le fichier
@@ -73,7 +80,7 @@ public class HandlerSAX extends DefaultHandler
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes)
     {
-        //System.out.println("Debut de la balise "+qName);
+        System.out.println("Debut de la balise "+qName);
         
         if(qName.compareTo("header")==0)
         {
@@ -117,6 +124,7 @@ public class HandlerSAX extends DefaultHandler
             dernierTypeMessage = TypeMessage.INFORMATION;
             //Ceci va également créer l'objet à l'intérieur de message
             message.setTypeMessage(dernierTypeMessage);
+            information = new Information();
         }
 
         if(qName.compareTo("sujet")==0)
@@ -141,9 +149,14 @@ public class HandlerSAX extends DefaultHandler
             dernierTypeMessage = TypeMessage.AUTORISATION;
             //Ceci va également créer l'objet à l'intérieur de message
             message.setTypeMessage(dernierTypeMessage);
+            dernierARemplir = "autorisation";
+            autorisation = new Autorisation();
         }
         
-        //TODO
+        if(qName.compareTo("autorisationID")==0)
+        {
+            dernierARemplir = "autorisationID";
+        }
         
         //Pour le type demande
         
@@ -152,9 +165,14 @@ public class HandlerSAX extends DefaultHandler
             dernierTypeMessage = TypeMessage.DEMANDE;
             //Ceci va également créer l'objet à l'intérieur de message
             message.setTypeMessage(dernierTypeMessage);
-        }        
-        
-        //TODO
+            demande = new Demande();
+            
+            //2 attributs
+            demande.setAuthId(Integer.valueOf(attributes.getValue("authId")));
+            demande.setDateSign(new SimpleDateFormat(attributes.getValue("dateSign")));
+            
+            dernierARemplir = "demande";
+        }
         
         //Pour le type reponse
         
@@ -163,9 +181,24 @@ public class HandlerSAX extends DefaultHandler
             dernierTypeMessage = TypeMessage.REPONSE;
             //Ceci va également créer l'objet à l'intérieur de message
             message.setTypeMessage(dernierTypeMessage);
+            reponse = new Reponse();
+            
+            //2 attributs
+            reponse.setMessageId(Integer.valueOf(attributes.getValue("messageId")));
+            reponse.setReponseId(Integer.valueOf(attributes.getValue("reponseId")));
+            
+            dernierARemplir = "reponse";
         }
         
-        //TODO
+        if(qName.compareTo("semaines")==0)
+        {
+            dernierARemplir = "semaines";
+        }
+        
+        if(qName.compareTo("mois")==0)
+        {
+            dernierARemplir = "mois";
+        }
         
     }
 
@@ -174,12 +207,32 @@ public class HandlerSAX extends DefaultHandler
      */
     public void endElement(String uri, String localName, String qName)
     {
-        //System.out.println("Fin de "+qName);
+        System.out.println("Fin de "+qName);
         if(qName.compareTo("message")==0)
         {
-            //On ajoute le message au doc maintenant qu'il est remplit
+            //On ajoute le message au doc maintenant qu'il est rempli
             doc.addMessage(message);
             dernierARemplir = "";
+        }
+        
+        if(qName.compareTo("information")==0)
+        {
+            message.setContenu(information);
+        }
+        
+        if(qName.compareTo("reponse")==0)
+        {
+            message.setContenu(reponse);
+        }
+        
+        if(qName.compareTo("autorisation")==0)
+        {
+            message.setContenu(autorisation);
+        }
+        
+        if(qName.compareTo("demande")==0)
+        {
+            message.setContenu(demande);
         }
     }
 
@@ -229,36 +282,79 @@ public class HandlerSAX extends DefaultHandler
         
         if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
         {
-            message.getInformation().setSujet(contenu);
+            dernierARemplir = "";
+            information.setSujet(contenu);
+            System.out.println("CONTENU "+contenu);
         }
         
         if(dernierARemplir.compareTo("contenuTexte")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
         {
-            message.getInformation().setContenuTexte(contenu);
+            dernierARemplir = "";
+            information.setContenuTexte(contenu);
         }
         
         if(dernierARemplir.compareTo("dateDebut")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
         {
-            message.getInformation().setDateDebut(new SimpleDateFormat(contenu));
+            dernierARemplir = "";
+            information.setDateDebut(new SimpleDateFormat(contenu));
         }
         
         //Pour le type DEMANDE
         
         if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
         {
-            message.getDemande().setSujet(contenu);
+            dernierARemplir = "";
+            demande.setSujet(contenu);
         }
         
-            //SUITE DEMANDE ICI
+        if(dernierARemplir.compareTo("dateDebut")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
+        {
+            dernierARemplir = "";
+            demande.setDateDebut(new SimpleDateFormat(contenu));
+        }
+                
+    //    if(dernierARemplir.compareTo("duree")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
+    //    {
+    //        dernierARemplir = "";
+    //    }
+    
+        if(dernierARemplir.compareTo("semaines")==0 && dernierTypeMessage==TypeMessage.AUTORISATION)
+        {
+            dernierARemplir = "";
+            autorisation.setDuree(contenu+" semaines");
+        }
+        
+        if(dernierARemplir.compareTo("semaines")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
+        {
+            dernierARemplir = "";
+            information.setDuree(contenu+" semaines");
+        }
+        
+            
+        if(dernierARemplir.compareTo("mois")==0 && dernierTypeMessage==TypeMessage.AUTORISATION)
+        {
+            dernierARemplir = "";
+            autorisation.setDateDebut(new SimpleDateFormat(contenu));
+        }
+        
+        if(dernierARemplir.compareTo("mois")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
+        {
+            dernierARemplir = "";
+            information.setDateDebut(new SimpleDateFormat(contenu));
+        }
         
         //Pour le type REPONSE
         
         if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.REPONSE)
         {
-            message.getReponse().setSujet(contenu);
+            dernierARemplir = "";
+            reponse.setSujet(contenu);
         }
         
-            //SUITE REPONSE ICI
-        
+        if(dernierARemplir.compareTo("contenuTexte")==0 && dernierTypeMessage==TypeMessage.REPONSE)
+        {
+            dernierARemplir = "";
+            reponse.setContenuTexte(contenu);
+        }
     }
 }
