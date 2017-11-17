@@ -21,6 +21,8 @@ public class TestParser
         HandlerSAX handlerFichier = new HandlerSAX(doc);
         p.monParsing(handlerFichier, "test.xml");
         
+        //Validating.validate("fichiers_definitions/definition.xsd","test.xml");
+        
         System.out.println("---- Informations importés : ----\n");        
         System.out.println("File ID = "+doc.getId());   
         System.out.println("Nom de l'institution = "+doc.getInstitution().getNom());     
