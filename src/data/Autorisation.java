@@ -15,6 +15,7 @@ public class Autorisation implements Contenu
     private int id;
     private SimpleDateFormat dateDebut;
     private SimpleDateFormat dateFin;
+    private String duree;
     
     public Autorisation()
     {
@@ -57,9 +58,21 @@ public class Autorisation implements Contenu
         this.dateFin = dateFin;
     }
 
+    public String getDuree()
+    {
+        return duree;
+    }
+
+    public void setDuree(String duree)
+    {
+        this.duree = duree;
+    }
+
     @Override
     public String toString()
     {
-        return "Autorisation{" + "id=" + id + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + '}';
+        return "Autorisation{" + "id=" + id + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", duree=" + duree + '}';
     }
+
+    
 }
