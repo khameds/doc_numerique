@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="fichiers_definition/definition.xsd">
+    <header fileID="1">
+        <nbMessages>1</nbMessages>
+        <institution>L'institution</institution>
+    </header>
+    <collMess>
+        <message messageId="1">
+            <mailDest>jacquie@michel.fr</mailDest>
+            <mailExp>marc@dorcel.fr</mailExp>
+            <information>
+                <sujet>Michel</sujet>
+                <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
+                <dateDebut>1/1/2018</dateDebut>
+                <duree>
+                    <semaines>1</semaines>
+                </duree>
+            </information>
+        </message>
+    </collMess>
+</fichier>
