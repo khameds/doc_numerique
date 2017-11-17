@@ -7,8 +7,8 @@
     </header>
     <collMess>
         <message messageId="11">
-            <emailDest>jacquie@michel.fr</emailDest>
-            <mettre_balise_ici>marc@dorcel.fr</mettre_balise_ici>
+            <emailExp>jacquiemichel</emailExp>
+            <emailExp>marc@dorcel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
                 <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
