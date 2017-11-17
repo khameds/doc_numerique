@@ -104,8 +104,8 @@
                             <xs:element name="nbMessages" type="xs:positiveInteger"/>
                             <xs:element name="institution" type="xs:string"/>
                         </xs:sequence>
+                        <xs:attribute name="fileId" type="xs:ID"/>
                     </xs:complexType>
-
                 </xs:element>
                 <xs:element name="collMess">
                     <xs:complexType>
@@ -122,14 +122,14 @@
                                             <xs:element ref="reponse"/>
                                         </xs:choice>
                                     </xs:sequence>
+                                    <xs:attribute name="messageId" type="xs:ID"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
-                        <xs:attribute name="messageId" type="xs:ID"/>
+
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="fileId" type="xs:ID"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
