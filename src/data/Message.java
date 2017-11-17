@@ -14,10 +14,7 @@ public class Message
     private TypeMessage typeMessage;
     private String mailExp;
     private String mailDest;
-    private Information information;
-    private Autorisation autorisation;
-    private Demande demande;
-    private Reponse reponse;
+    private Contenu contenu;
     
     public Message()
     {
@@ -37,7 +34,29 @@ public class Message
 
     public void setTypeMessage(TypeMessage typeMessage)
     {
-        this.typeMessage = typeMessage;
+        if(contenu==null)
+        {
+            this.typeMessage = typeMessage;
+            switch(typeMessage)
+            {
+                case AUTORISATION:
+                    contenu = new Autorisation();
+                    break;
+                case DEMANDE:
+                    contenu = new Demande();
+                    break;
+                case INFORMATION:
+                    contenu = new Information();
+                    break;
+                case REPONSE:
+                    contenu = new Reponse();
+                    break;
+            }
+        }
+        else
+        {
+            System.err.println("Erreur: Tentative de modifier le type d'un message déjà rempli");
+        }
     }
 
     public String getMailExp()
@@ -59,45 +78,36 @@ public class Message
     {
         this.mailDest = mailDest;
     }
+    
+    public Contenu getContenu()
+    {
+        return contenu;
+    }
 
     public Information getInformation()
     {
-        return information;
+        return (Information) contenu;
     }
-
-    public void setInformation(Information information)
-    {
-        this.information = information;
-    }
-
+    
     public Autorisation getAutorisation()
     {
-        return autorisation;
+        return (Autorisation) contenu;
     }
-
-    public void setAutorisation(Autorisation autorisation)
-    {
-        this.autorisation = autorisation;
-    }
-
+    
     public Demande getDemande()
     {
-        return demande;
+        return (Demande) contenu;
     }
-
-    public void setDemande(Demande demande)
-    {
-        this.demande = demande;
-    }
-
+    
     public Reponse getReponse()
     {
-        return reponse;
+        return (Reponse) contenu;
     }
 
-    public void setReponse(Reponse reponse)
+    public void setContenu(Contenu contenu)
     {
-        this.reponse = reponse;
+        System.out.println(contenu.getClass());
+        this.contenu = contenu;
     }
 
     public int getId()
@@ -113,33 +123,6 @@ public class Message
     @Override
     public String toString()
     {
-        String ajout = "";
-        if(autorisation==null&&demande==null&&reponse==null&&information==null)
-        {
-            ajout = "(Impossible d'afficher le message)";
-        }
-        else
-        {
-            switch(typeMessage)
-            {
-                case AUTORISATION:
-                    ajout = autorisation.toString();
-                    break;
-                case INFORMATION:
-                    ajout = information.toString();
-                    break;
-                case REPONSE:
-                    ajout = reponse.toString();
-                    break;
-                case DEMANDE:
-                    ajout = demande.toString();
-                    break;
-                default:
-                    ajout = "(Impossible d'afficher le message)";
-                    break;
-            }
-        }
-        
-        return "Message{" + "id=" + id + ", typeMessage=" + typeMessage + ", mailExp=" + mailExp + ", mailDest=" + mailDest + ", " + ajout;       
+        return "Message{" + "id=" + id + ", typeMessage=" + typeMessage + ", mailExp=" + mailExp + ", mailDest=" + mailDest + ", contenu=" + contenu + '}';
     }
 }
