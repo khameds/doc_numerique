@@ -106,7 +106,6 @@ public class Message
 
     public void setContenu(Contenu contenu)
     {
-        System.out.println(contenu.getClass());
         this.contenu = contenu;
     }
 
@@ -123,6 +122,6 @@ public class Message
     @Override
     public String toString()
     {
-        return "Message{" + "id=" + id + ", typeMessage=" + typeMessage + ", mailExp=" + mailExp + ", mailDest=" + mailDest + ", contenu=" + contenu + '}';
+        return "Message{" + "id=" + id + ", typeMessage=" + typeMessage + ", mailExp=" + mailExp + ", mailDest=" + mailDest + ", contenu=" + contenu.toString() + '}';
     }
 }
