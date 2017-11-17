@@ -4,16 +4,17 @@
  */
 package data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  *
  * @author Chris
  */
-class Information
+public class Information implements Contenu
 {
     private String duree;
-    private Date dateDebut;
+    private SimpleDateFormat dateDebut;
     private String sujet;
     private String contenuTexte;
 
@@ -27,12 +28,12 @@ class Information
         this.duree = duree;
     }
 
-    public Date getDateDebut()
+    public SimpleDateFormat getDateDebut()
     {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut)
+    public void setDateDebut(SimpleDateFormat dateDebut)
     {
         this.dateDebut = dateDebut;
     }
@@ -56,6 +57,10 @@ class Information
     {
         this.contenuTexte = contenuTexte;
     }
-    
-    
+
+    @Override
+    public String toString()
+    {
+        return "Information{" + "duree=" + duree + ", dateDebut=" + dateDebut + ", sujet=" + sujet + ", contenuTexte=" + contenuTexte + '}';
+    }
 }

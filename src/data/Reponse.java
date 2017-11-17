@@ -8,7 +8,7 @@ package data;
  *
  * @author Tony
  */
-class Reponse
+public class Reponse implements Contenu
 {
     private int messageId;
     private int reponseId;
@@ -58,6 +58,12 @@ class Reponse
     public void setContenuTexte(String contenuTexte)
     {
         this.contenuTexte = contenuTexte;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Reponse{" + "messageId=" + messageId + ", reponseId=" + reponseId + ", sujet=" + sujet + ", contenuTexte=" + contenuTexte + '}';
     }
     
     

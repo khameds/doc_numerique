@@ -4,19 +4,20 @@
  */
 package data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  *
  * @author Chris
  */
-class Demande
+public class Demande implements Contenu
 {
     private String sujet;
-    private Date dateDebut;
+    private SimpleDateFormat dateDebut;
     private String duree;
     private int authId;
-    private Date dateSign;
+    private SimpleDateFormat dateSign;
             
     public Demande()
     {
@@ -33,12 +34,12 @@ class Demande
         this.sujet = sujet;
     }
 
-    public Date getDateDebut()
+    public SimpleDateFormat getDateDebut()
     {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut)
+    public void setDateDebut(SimpleDateFormat dateDebut)
     {
         this.dateDebut = dateDebut;
     }
@@ -63,15 +64,19 @@ class Demande
         this.authId = authId;
     }
 
-    public Date getDateSign()
+    public SimpleDateFormat getDateSign()
     {
         return dateSign;
     }
 
-    public void setDateSign(Date dateSign)
+    public void setDateSign(SimpleDateFormat dateSign)
     {
         this.dateSign = dateSign;
     }
-    
-    
+
+    @Override
+    public String toString()
+    {
+        return "Demande{" + "sujet=" + sujet + ", dateDebut=" + dateDebut + ", duree=" + duree + ", authId=" + authId + ", dateSign=" + dateSign + '}';
+    }
 }

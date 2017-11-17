@@ -4,17 +4,17 @@
  */
 package data;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
  * @author Chris
  */
-public class Autorisation
+public class Autorisation implements Contenu
 {
     private int id;
-    private Date dateDebut;
-    private Date dateFin;
+    private SimpleDateFormat dateDebut;
+    private SimpleDateFormat dateFin;
     
     public Autorisation()
     {
@@ -37,25 +37,29 @@ public class Autorisation
         this.id = id;
     }
 
-    public Date getDateDebut()
+    public SimpleDateFormat getDateDebut()
     {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut)
+    public void setDateDebut(SimpleDateFormat dateDebut)
     {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin()
+    public SimpleDateFormat getDateFin()
     {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin)
+    public void setDateFin(SimpleDateFormat dateFin)
     {
         this.dateFin = dateFin;
     }
-    
-    
+
+    @Override
+    public String toString()
+    {
+        return "Autorisation{" + "id=" + id + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + '}';
+    }
 }
