@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+
+    <header fileId="3">
+        <nbMessages>4</nbMessages>
+        <institution>L'institution</institution>
+    </header>
+    <collMess>
+        <message messageId="1">
+            <emailExp>jacquie@michel.fr</emailExp>
+            <emailExp>marc@dorcel.fr</emailExp>
+            <information>
+                <sujet>Michel</sujet>
+                <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
+                <dateDebut>1/1/2018</dateDebut>
+                <duree>
+                    <semaines>1</semaines>
+                </duree>
+            </information>
+        </message>
+        <message messageId="2">
+            <information>
+                <sujet>Michel</sujet>
+                <contenuTexte>Salut, il participera au tournage!</contenuTexte>
+                <dateDebut>1/1/2018</dateDebut>
+                <duree>
+                    <semaines>1</semaines>
+                </duree>
+            </information>
+        </message>
+        <message>
+            <emailExp>eeeee@ee.el</emailExp>
+            <demande authId="10" dateSign="10/10/2017">
+                <sujet>sujet de la demande 1</sujet>
+                <dateDebut>11/11/2017</dateDebut>
+                <duree>
+                    <mois>2</mois>
+                </duree>
+            </demande>
+        </message>
+        <message messageId="3">
+            <emailDest>dddd@dd.de</emailDest>
+            <autorisation>
+                <autorisationID>12345</autorisationID>
+                <dateDebut></dateDebut>
+                <duree>
+                    <mois>3</mois>
+                </duree>
+            </autorisation>
+        </message>
+        <message messageId="4">
+            <emailExp>aaa@aa.aa</emailExp>
+            <emailDest>bbb@bb.bb.bb.fr</emailDest>
+            <emailDest>ccccc@ccccc.cc.com</emailDest>
+            <reponse messageId="1" reponseId="112">
+                <sujet>Reponse a message id:1</sujet>
+                <contenuTexte>Ceci est le contenu du message id:1</contenuTexte>
+            </reponse>
+        </message>
+    </collMess>
+</fichier>
