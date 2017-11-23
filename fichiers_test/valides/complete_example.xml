@@ -39,11 +39,11 @@
                 </duree>
             </demande>
         </message>
-        <message messageId="3">
+        <message messageId="345">
             <emailDest>dddd@dd.de</emailDest>
             <autorisation>
                 <autorisationID>12345</autorisationID>
-                <dateDebut></dateDebut>
+                <dateDebut>21/11/2017</dateDebut>
                 <duree>
                     <mois>3</mois>
                 </duree>
@@ -53,7 +53,7 @@
             <emailExp>aaa@aa.aa</emailExp>
             <emailDest>bbb@bb.bb.bb.fr</emailDest>
             <emailDest>ccccc@ccccc.cc.com</emailDest>
-            <reponse messageId="1" reponseId="112">
+            <reponse messageId="123" reponseId="112">
                 <sujet>Reponse a message id:1</sujet>
                 <contenuTexte>Ceci est le contenu du message id:1</contenuTexte>
             </reponse>
