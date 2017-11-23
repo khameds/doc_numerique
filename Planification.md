@@ -15,5 +15,5 @@ Fichiers de test | Smaïl | Facile   | Aucun         | 16/11       | Fichiers de
 Analyse des fichiers | Christopher | Difficile | Après avoir fait les fichiers de tests | 16/11 | Fichiers de tests | Objets Java
 Verification | Clément  | Facile      | Après analyse des fichiers | 17/11     |Objets Java | Validation ou non
 Traitement des données | Clément, Dimitri | Moyenne | Après vérification | 20/11 | Objets java | Traitement
-Diapo   | Smaïl   | Facile  | Aucun   | 1/12      |   | Diapo 
-Rapport | Tout le monde | Facile | Aucun | 1/12 | | Rapport
+Diapo   |     Smaïl      | Facile      |      Aucun   |   1/12      |        | Diapo 
+Rapport |  Tout le monde | Facile     |          Aucun |      1/12  |         | Rapport
