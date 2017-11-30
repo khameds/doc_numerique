@@ -6,20 +6,19 @@
         <xs:simpleType>
             <xs:restriction base="xs:string">
                 <xs:pattern
-                        value="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
+                    value="[a-z0-9.-_]+@[a-z.]+"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
 
     <xs:element name="emailDest">
-    <xs:simpleType>
-        <xs:restriction base="xs:string">
-            <xs:pattern
-                    value="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"/>
-        </xs:restriction>
-    </xs:simpleType>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:pattern value="[a-z0-9.-_]+@[a-z.]+"/>
+            </xs:restriction>
+        </xs:simpleType>
 
-</xs:element>
+    </xs:element>
     <xs:element name="duree">
         <xs:complexType>
             <xs:choice>
@@ -98,7 +97,7 @@
                     </xs:simpleType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="messageId" type="xs:ID" use="required"/>
+            <xs:attribute name="messageId" type="xs:IDREF" use="required"/>
             <xs:attribute name="reponseId" type="xs:ID" use="required"/>
         </xs:complexType>
     </xs:element>

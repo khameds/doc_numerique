@@ -2,48 +2,51 @@
 <fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
 
-    <header fileId="12">
+    <header fileId="f1">
         <nbMessages>4</nbMessages>
         <institution>L'institution</institution>
     </header>
     <collMess>
-        <message messageId="1">
+        <message messageId="m1">
+        <emailDest>marc@dorcel.fr</emailDest>
         <emailExp>jacquie@michel.fr</emailExp>
-        <emailExp>marc@dorcel.fr</emailExp>
         <information>
             <sujet>Michel</sujet>
             <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
-            <dateDebut>1/1/2018</dateDebut>
+            <dateDebut>2018-01-01</dateDebut>
             <duree>
                 <semaines>1</semaines>
             </duree>
         </information>
     </message>
-        <message messageId="2">
+        <message messageId="m2">
+        <emailDest>marc@dorcel.fr</emailDest>
+        <emailDest>marc.bernard@dorcel.fr</emailDest>
+        <emailExp>jacquie@michel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
                 <contenuTexte>Salut, il participera au tournage!</contenuTexte>
-                <dateDebut>1/1/2018</dateDebut>
+                <dateDebut>2018-01-01</dateDebut>
                 <duree>
                     <semaines>1</semaines>
                 </duree>
             </information>
         </message>
-        <message messageId="3">
+        <message messageId="m3">
             <information>
                 <sujet>Toujours Michel</sujet>
                 <contenuTexte>Il a chopé un truc, il est sous antibiotique, c pas génant?</contenuTexte>
-                <dateDebut>1/1/2018</dateDebut>
+                <dateDebut>2018-01-01</dateDebut>
                 <duree>
                     <semaines>1</semaines>
                 </duree>
             </information>
         </message>
-        <message messageId="4">
+        <message messageId="m4">
             <information>
                 <sujet>toujours plus de Michel</sujet>
                 <contenuTexte>Ouep osef, l'autre est toute bouffée de l'interieur aussi...</contenuTexte>
-                <dateDebut>1/1/2018</dateDebut>
+                <dateDebut>2018-01-01</dateDebut>
                 <duree>
                     <semaines>1</semaines>
                 </duree>
