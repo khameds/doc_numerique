@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
  */
 public class Autorisation implements Contenu
 {
-    private int id;
+    private String id;
     private SimpleDateFormat dateDebut;
     private SimpleDateFormat dateFin;
     private String duree;
@@ -22,18 +22,18 @@ public class Autorisation implements Contenu
         
     }
     
-    public Autorisation(int id)
+    public Autorisation(String id)
     {
         this();
         this.id = id;
     }
 
-    public int getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(String id)
     {
         this.id = id;
     }

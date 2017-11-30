@@ -10,7 +10,7 @@ package data;
  */
 public class Message
 {
-    private int id;
+    private String id;
     private TypeMessage typeMessage;
     private String mailExp;
     private String mailDest;
@@ -109,12 +109,12 @@ public class Message
         this.contenu = contenu;
     }
 
-    public int getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(String id)
     {
         this.id = id;
     }

@@ -16,7 +16,7 @@ public class Demande implements Contenu
     private String sujet;
     private SimpleDateFormat dateDebut;
     private String duree;
-    private int authId;
+    private String authId;
     private SimpleDateFormat dateSign;
             
     public Demande()
@@ -54,12 +54,12 @@ public class Demande implements Contenu
         this.duree = duree;
     }
 
-    public int getAuthId()
+    public String getAuthId()
     {
         return authId;
     }
 
-    public void setAuthId(int authId)
+    public void setAuthId(String authId)
     {
         this.authId = authId;
     }

@@ -10,8 +10,8 @@ package data;
  */
 public class Reponse implements Contenu
 {
-    private int messageId;
-    private int reponseId;
+    private String messageId;
+    private String reponseId;
     private String sujet;
     private String contenuTexte;
     
@@ -20,25 +20,27 @@ public class Reponse implements Contenu
         
     }
 
-    public int getMessageId()
+    public String getMessageId()
     {
         return messageId;
     }
 
-    public void setMessageId(int messageId)
+    public void setMessageId(String messageId)
     {
         this.messageId = messageId;
     }
 
-    public int getReponseId()
+    public String getReponseId()
     {
         return reponseId;
     }
 
-    public void setReponseId(int reponseId)
+    public void setReponseId(String reponseId)
     {
         this.reponseId = reponseId;
     }
+    
+    
 
     public String getSujet()
     {

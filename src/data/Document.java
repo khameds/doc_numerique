@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Document
 {
-    private int id;
+    private String id;
     
     private int nombreMessageAnnonce;
     private Institution institutionOrigine;
@@ -23,7 +23,7 @@ public class Document
         listeMessage = new ArrayList<>();
     }
     
-    public Document(int id)
+    public Document(String id)
     {
         this();
         this.id = id;
@@ -39,12 +39,12 @@ public class Document
         return listeMessage.get(i);
     }
 
-    public int getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(String id)
     {
         this.id = id;
     }
