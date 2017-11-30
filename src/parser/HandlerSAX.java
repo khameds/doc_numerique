@@ -85,7 +85,7 @@ public class HandlerSAX extends DefaultHandler
         if(qName.compareTo("header")==0)
         {
             //On fixe fileID
-            doc.setId(Integer.valueOf(attributes.getValue("fileId")));        
+            doc.setId(attributes.getValue("fileId"));        
             dernierARemplir = "header";
         }
         
@@ -103,7 +103,7 @@ public class HandlerSAX extends DefaultHandler
         {
             message = new Message();
             //On fixe l'id du message
-            message.setId(Integer.valueOf(attributes.getValue("messageId")));
+            message.setId(attributes.getValue("messageId"));
             dernierARemplir = "message";
         }
         
@@ -168,7 +168,7 @@ public class HandlerSAX extends DefaultHandler
             demande = new Demande();
             
             //2 attributs
-            demande.setAuthId(Integer.valueOf(attributes.getValue("authId")));
+            demande.setAuthId(attributes.getValue("authId"));
             demande.setDateSign(new SimpleDateFormat(attributes.getValue("dateSign")));
             
             dernierARemplir = "demande";
@@ -184,8 +184,8 @@ public class HandlerSAX extends DefaultHandler
             reponse = new Reponse();
             
             //2 attributs
-            reponse.setMessageId(Integer.valueOf(attributes.getValue("messageId")));
-            reponse.setReponseId(Integer.valueOf(attributes.getValue("reponseId")));
+            reponse.setMessageId(attributes.getValue("messageId"));
+            reponse.setReponseId(attributes.getValue("reponseId"));
             
             dernierARemplir = "reponse";
         }
