@@ -8,7 +8,6 @@ import server.Server;
 
 /**
  *
- * @author Chris
  */
 public class ProjetDocNumerique
 {
@@ -17,9 +16,9 @@ public class ProjetDocNumerique
      * @param args the command line arguments
      */
     public static void main(String[] args)
-    {
+    {   
         Server server = new Server();
-        server.start();
+        server.startServer();
     }
     
 }

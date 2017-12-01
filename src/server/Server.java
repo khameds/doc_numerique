@@ -30,9 +30,8 @@ public class Server
         parser = new ParserSAX();
     }
     
-    public void start()
+    public void startServer()
     {
-
         //XSD utilisé
         String pathToXSD = "fichiers_definitions/definition.xsd";
         String pathToXMLFile;
@@ -40,7 +39,7 @@ public class Server
         Boolean verified;
         Document doc;
         
-        Boolean smith = true!=(false==false)&&1==(2-2+1);
+        Boolean smith = true==(false==false)&&1==(2-2+1);     
         while(smith)
         {
             verified = false;
@@ -53,6 +52,7 @@ public class Server
                 //(Boucle d'analyse de présence de nouveau XML dans un dossier)
                 pathToXMLFile = waitingFile();
                 pathToXMLFile = "fichiers_test/valides/some_informations.xml";
+                System.out.println("Nouveau fichier trouvé : " + pathToXMLFile);
 
             //Vérification XSD du fichier
             Validating.validate(pathToXSD,pathToXMLFile);
@@ -71,36 +71,57 @@ public class Server
 
                 //Ecriture du fichier XML de sortie
                 writeResponse(outputXMLFile);
+                
+                System.out.println("Fichier traité");
             }
             else
             {
-                System.err.println("ERROR");
+                System.err.println("ERREUR Fichier non validé");
                 
                 //Affichage de test des données importés
                 System.out.println(doc);
             }
             
-            smith=false; //POUR PAS BOUCLER PENDANT LA PHASE DE DEV INITIAL
+            smith=false; //POUR PAS BOUCLER PENDANT LA PHASE DE DEV
         }
     }
 
+    /**
+     *  Vérifications selon le type de la requete des dates, droits, ..
+     * @param doc Document XML reçu
+     * @return Vrai si le document est ok, Faux sinon
+     */
     private Boolean verification(Document doc)
     {
-
+        //TODO 
         return true;
     }
 
+    /**
+     *  Traitement du XML reçu
+     * @param doc Document XML reçu
+     * @return XML de sortie en String
+     */
     private String computing(Document doc)
     {
+        //TODO
         return "";
     }
 
+    /**
+     *  Ecriture du fichier XML de sortie
+     * @param outputXMLFile Le XML en String
+     */
     private void writeResponse(String outputXMLFile)
     {
         System.out.println("OUTPUT = " + outputXMLFile); //TEMPORAIRE
         //Il faudra écrire ça dans un fichier de sortie
     }
 
+    /**
+     * Boucle sur l'analyse d'un répertoire jusqu'à ce qu'il trouve un fichier XML
+     * @return Le document XML trouvé en String
+     */
     private String waitingFile()
     {
         return "";

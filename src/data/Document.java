@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Chris
  */
 public class Document
 {
