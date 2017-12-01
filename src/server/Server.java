@@ -13,14 +13,16 @@ import parser.ParserSAX;
 import parser.Validating;
 
 /**
- * Sert aux tests sur le XML et les parsers
- *
+ * Serveur pour la reception, l'analyse et le traitement des fichiers XML
  */
 public class Server
 {    
     Database database;
     ParserSAX parser;
     
+    /**
+     * Initialisation du serveur
+     */
     public Server()
     {
         //Initialisation de la base de donnée
@@ -30,6 +32,9 @@ public class Server
         parser = new ParserSAX();
     }
     
+    /**
+     *  Lancement du serveur
+     */
     public void startServer()
     {
         //XSD utilisé
