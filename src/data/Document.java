@@ -73,4 +73,10 @@ public class Document
     {
         this.institutionOrigine = institution;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Document{" + "id=" + id + ", nombreMessageAnnonce=" + nombreMessageAnnonce + ", institutionOrigine=" + institutionOrigine + ", listeMessage=" + listeMessage + '}';
+    }
 }
