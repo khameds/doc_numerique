@@ -12,8 +12,6 @@ import data.Institution;
 import data.TypeMessage;
 import data.Information;
 import data.Reponse;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -61,7 +59,7 @@ public class HandlerSAX extends DefaultHandler
     @Override
     public void startDocument()
     {
-        System.out.println("-- Debut fichier --\n\n");
+        //System.out.println("-- Debut fichier --\n\n");
     }
 
     /* (non-Javadoc)
@@ -70,8 +68,8 @@ public class HandlerSAX extends DefaultHandler
     @Override
     public void endDocument()
     {
-        System.out.println("-- Fichier termine --");
-        System.out.println();
+        //System.out.println("-- Fichier termine --");
+        //System.out.println();
     }
 
     /* (non-Javadoc)
