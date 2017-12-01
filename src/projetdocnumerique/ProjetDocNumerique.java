@@ -4,6 +4,8 @@
 */
 package projetdocnumerique;
 
+import server.Server;
+
 /**
  *
  * @author Chris
@@ -16,9 +18,8 @@ public class ProjetDocNumerique
      */
     public static void main(String[] args)
     {
-        //Parser
-        //Vérifier
-        //Traiter
+        Server server = new Server();
+        server.start();
     }
     
 }
