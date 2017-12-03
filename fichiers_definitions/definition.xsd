@@ -54,7 +54,7 @@
     <xs:element name="autorisation">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="autorisationID" type="xs:positiveInteger"/>
+                <xs:element name="autorisationID" type="xs:string"/>
                 <xs:element name="dateDebut" type="xs:date"/>
                 <xs:element ref="duree"/>
             </xs:sequence>
