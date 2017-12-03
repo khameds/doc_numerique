@@ -8,6 +8,7 @@ package server;
 
 import data.Database;
 import data.Document;
+import data.Global;
 import parser.HandlerSAX;
 import parser.ParserSAX;
 import parser.Validating;
@@ -48,7 +49,7 @@ public class Server
         while(smith)
         {
             verified = false;
-            outputXMLFile = "";
+            outputXMLFile = Global.OUTPUT_TRACE_FILE_PATH;
              
             //Document qui stockera le dernier fichier XML analysé
             doc = new Document();
@@ -56,7 +57,7 @@ public class Server
             //On attend un nouveau XML
                 //(Boucle d'analyse de présence de nouveau XML dans un dossier)
                 pathToXMLFile = waitingFile();
-                pathToXMLFile = "fichiers_test/valides/some_informations.xml";
+                pathToXMLFile = Global.INPUT_XML_FILE_PATH;
                 System.out.println("Nouveau fichier trouvé : " + pathToXMLFile);
 
             //Vérification XSD du fichier
