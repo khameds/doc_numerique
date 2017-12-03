@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
 
-    <header fileId="1">
+<!-- Fichier de Test :
+Cible : Validation de la structure du fichier
+Test : Definition d'un fichier minimaliste ne contenant aucun message.
+Résultat attendu : Fichier validé par le parser SAX.
+-->
+
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+    <header fileId="f1">
         <nbMessages>0</nbMessages>
         <institution>L'institution</institution>
     </header>

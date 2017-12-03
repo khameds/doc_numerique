@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Fichier de Test :
+Cible : Validation de la structure du fichier
+Test : Definition d'un fichier coontenant plusieurs messages d'information ainsi que différentes cardinalité de champ email.
+Résultat attendu : Fichier validé par le parser SAX.
+-->
+
 <fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
 

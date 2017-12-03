@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Fichier de Test :
+  Cible : Validation de la structure du fichier
+  Résultat attendu : Fichier rejeté car le fichier n'est pas "bien formé".
+  La balise "CollMess" n'est pas fermée.
+-->
+
 <fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
 
     <header fileId="f1">
@@ -8,7 +15,6 @@
     <collMess>
         <message messageId="m1">
             <emailExp>jacquie@michel.fr</emailExp>
-            <emailExp>marc@dorcel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
                 <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
