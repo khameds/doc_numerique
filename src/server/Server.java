@@ -8,6 +8,8 @@ package server;
 import data.Database;
 import data.Document;
 import java.io.IOException;
+
+import data.Global;
 import parser.HandlerSAX;
 import parser.ParserSAX;
 import parser.Validating;
@@ -28,7 +30,7 @@ public class Server
     public Server()
     {
         //Initialisation de la base de donnée
-        database = new Database(); //TODO
+        database = new Database(Global.DB_PATH); //TODO
         
         //Initialisation du parseur
         parser = new ParserSAX();
@@ -41,7 +43,7 @@ public class Server
     public void start()
     {
         DirectoryWatchService watchService = null;
-        
+
         try
         {
             watchService = new SimpleDirectoryWatchService();
@@ -50,14 +52,14 @@ public class Server
                 @Override
                 public void onFileCreate(String newFilePath)
                 {
-                    System.out.println("creation of "+newFilePath);
-                    startComputing("FileReceivingFolder/"+newFilePath);
+                    System.out.println("creation of " + newFilePath);
+                    startComputing(Global.FILE_RECEIVING_FOLDER + newFilePath);
                 }
                 @Override
                 public void onFileModify(String newFilePath)
                 {
-                    System.out.println("modification of "+newFilePath);
-                    startComputing("FileReceivingFolder/"+newFilePath);
+                    System.out.println("modification of " + newFilePath);
+                    startComputing(Global.FILE_RECEIVING_FOLDER + newFilePath);
                 }
                 @Override
                 public void onFileDelete(String newFilePath)
@@ -65,11 +67,13 @@ public class Server
                     System.out.println("delete of "+newFilePath);
                 }
             },
-                "FileReceivingFolder", // Directory to watch
+                Global.FILE_RECEIVING_FOLDER, // Directory to watch
                 "*.xml"
             );
 
             watchService.start();
+            database.connect();
+
         }
         catch (IOException e)
         {
@@ -84,19 +88,18 @@ public class Server
     public void startComputing(String pathToXMLFile)
     {
         //XSD utilisé
-        String pathToXSD = "fichiers_definitions/definition.xsd";
-        String outputXMLFile;
+        String pathToXSD = Global.XSD_FILE_PATH;
+        String outputXMLFile = Global.OUTPUT_TRACE_FILE_PATH;
         Boolean verified;
         Document doc;
         
         verified = false;
-        outputXMLFile = "";
 
         //Document qui stockera le dernier fichier XML analysé
         doc = new Document();
 
         //Vérification XSD du fichier
-        Validating.validate(pathToXSD,pathToXMLFile);
+        Validating.validate(pathToXSD, pathToXMLFile);
 
         //On parse le XML
         HandlerSAX handlerFile = new HandlerSAX(doc);
