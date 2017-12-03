@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">>
 
-    <header fileId="1">
+<!-- Fichier de Test :
+  Cible : Verification des adresses mails éventuelles
+  Résultat attendu : Fichier rejeté car format d'adresse mail invalide
+-->
+
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+
+    <header fileId="f1">
         <nbMessages>1</nbMessages>
         <institution>L'institution</institution>
     </header>
     <collMess>
-        <message messageId="11">
-            <emailExp>jacquiemichel</emailExp>
-            <emailExp>marc@dorcel.fr</emailExp>
+        <message messageId="m1">
+            <emailExp>jsd   sfef</emailExp>
             <information>
                 <sujet>Michel</sujet>
                 <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
