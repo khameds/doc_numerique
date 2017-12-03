@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Fichier de Test :
+  Cible : Validation de la structure du fichier
+  Résultat attendu : Fichier rejeté car le noeud "header" est absent
+-->
+
 <fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
     <collMess>
         <message messageId="m1">
-            <emailExp>jacquie@michel.fr</emailExp>
             <emailExp>marc@dorcel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
