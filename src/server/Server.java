@@ -5,12 +5,14 @@ package server;
 * Smail KHAMED, Clément COLIN, Dimitri BRUYERE, Christopher JEAMME
 */
 
-
 import data.Database;
 import data.Document;
+import java.io.IOException;
 import parser.HandlerSAX;
 import parser.ParserSAX;
 import parser.Validating;
+import watchDir.DirectoryWatchService;
+import watchDir.SimpleDirectoryWatchService;
 
 /**
  * Serveur pour la reception, l'analyse et le traitement des fichiers XML
@@ -26,68 +28,99 @@ public class Server
     public Server()
     {
         //Initialisation de la base de donnée
-        database = new Database();
+        database = new Database(); //TODO
         
         //Initialisation du parseur
         parser = new ParserSAX();
     }
     
+    
     /**
-     *  Lancement du serveur
+     * Base du programme, déclenche le traitement lorsqu'un nouveau fichier XML est placé dans le répertoire FileReceivingFolder
      */
-    public void startServer()
+    public void start()
+    {
+        DirectoryWatchService watchService = null;
+        
+        try
+        {
+            watchService = new SimpleDirectoryWatchService();
+            watchService.register(new DirectoryWatchService.OnFileChangeListener()
+            {
+                @Override
+                public void onFileCreate(String newFilePath)
+                {
+                    System.out.println("creation of "+newFilePath);
+                    startComputing("FileReceivingFolder/"+newFilePath);
+                }
+                @Override
+                public void onFileModify(String newFilePath)
+                {
+                    System.out.println("modification of "+newFilePath);
+                    startComputing("FileReceivingFolder/"+newFilePath);
+                }
+                @Override
+                public void onFileDelete(String newFilePath)
+                {
+                    System.out.println("delete of "+newFilePath);
+                }
+            },
+                "FileReceivingFolder", // Directory to watch
+                "*.xml"
+            );
+
+            watchService.start();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     *  Lancement du traitement
+     * @param pathToXMLFile Path to the XML file
+     */
+    public void startComputing(String pathToXMLFile)
     {
         //XSD utilisé
         String pathToXSD = "fichiers_definitions/definition.xsd";
-        String pathToXMLFile;
         String outputXMLFile;
         Boolean verified;
         Document doc;
         
-        Boolean smith = true==(false==false)&&1==(2-2+1);     
-        while(smith)
+        verified = false;
+        outputXMLFile = "";
+
+        //Document qui stockera le dernier fichier XML analysé
+        doc = new Document();
+
+        //Vérification XSD du fichier
+        Validating.validate(pathToXSD,pathToXMLFile);
+
+        //On parse le XML
+        HandlerSAX handlerFile = new HandlerSAX(doc);
+        parser.monParsing(handlerFile, pathToXMLFile);
+
+        //Vérification des données
+        verified = verification(doc); //TODO
+
+        if(verified)
         {
-            verified = false;
-            outputXMLFile = "";
-             
-            //Document qui stockera le dernier fichier XML analysé
-            doc = new Document();
+            //Considération du fichier
+            outputXMLFile = consideration(doc); //TODO
 
-            //On attend un nouveau XML
-                //(Boucle d'analyse de présence de nouveau XML dans un dossier)
-                pathToXMLFile = waitingFile();
-                pathToXMLFile = "fichiers_test/valides/some_informations.xml";
-                System.out.println("Nouveau fichier trouvé : " + pathToXMLFile);
+            //Ecriture du fichier XML de sortie
+            writeResponse(outputXMLFile); //TODO
 
-            //Vérification XSD du fichier
-            Validating.validate(pathToXSD,pathToXMLFile);
+            System.out.println("Fichier traité");
+        }
+        else
+        {
+            System.err.println("ERREUR Fichier non validé");
 
-            //On parse le XML
-            HandlerSAX handlerFile = new HandlerSAX(doc);
-            parser.monParsing(handlerFile, pathToXMLFile);
-
-            //Vérification des données
-            verified = verification(doc); //TODO
-
-            if(verified)
-            {
-                //Traitement du fichier
-                outputXMLFile = computing(doc); //TODO
-
-                //Ecriture du fichier XML de sortie
-                writeResponse(outputXMLFile);
-                
-                System.out.println("Fichier traité");
-            }
-            else
-            {
-                System.err.println("ERREUR Fichier non validé");
-                
-                //Affichage de test des données importés
-                System.out.println(doc);
-            }
-            
-            smith=false; //POUR PAS BOUCLER PENDANT LA PHASE DE DEV
+            //Affichage de test des données importés
+            System.out.println(doc);
         }
     }
 
@@ -103,11 +136,11 @@ public class Server
     }
 
     /**
-     *  Traitement du XML reçu
+     *  Prise en compte du XML reçu
      * @param doc Document XML reçu
      * @return XML de sortie en String
      */
-    private String computing(Document doc)
+    private String consideration(Document doc)
     {
         //TODO
         return "";
@@ -121,14 +154,5 @@ public class Server
     {
         System.out.println("OUTPUT = " + outputXMLFile); //TEMPORAIRE
         //Il faudra écrire ça dans un fichier de sortie
-    }
-
-    /**
-     * Boucle sur l'analyse d'un répertoire jusqu'à ce qu'il trouve un fichier XML
-     * @return Le document XML trouvé en String
-     */
-    private String waitingFile()
-    {
-        return "";
     }
 }
