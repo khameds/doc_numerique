@@ -73,8 +73,10 @@ public class Server
 
             watchService.start();
             database.connect();
-
-        }
+	    database.createTableMail();
+	    
+	    database.insertIntoMail("test","test","test");
+	    }
         catch (IOException e)
         {
             e.printStackTrace();
