@@ -13,6 +13,7 @@ import java.io.IOException;
 import data.Global;
 import data.Message;
 import data.TypeMessage;
+import java.util.List;
 import parser.HandlerSAX;
 import parser.ParserSAX;
 import parser.Validating;
@@ -154,17 +155,24 @@ public class Server
         {
             Message m = doc.getMessage(i);
             boolean reject = false;
-//            List<String> listDest = m.getMailDest();
-//            if (listDest != null)
-//            {
-//                for (int j=0; j<listDest.size(); j++)
-//                {
+            List<String> listDest = m.getMailDest();
+            if (listDest != null)
+            {
+                for (int j=0; j<listDest.size(); j++)
+                {
 //                    if (! existsInDB(listDest.get(i))) //Si l'email n'existe pas
 //                        reject = true; //Il faudra rejeter le message
-//                }
-//            }
+                }
+            }
             TypeMessage type = m.getTypeMessage();
             String id = m.getId();
+            
+            if (! m.toString().matches("\\A\\p{ASCII}*\\z")) //Faudra tester ça
+            {
+                System.err.println("Le message contient des caractères non ASCII");
+                reject = true;
+            }
+            
             switch (type)
             {
                 case AUTORISATION:
