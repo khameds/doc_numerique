@@ -74,9 +74,10 @@ public class Server
 
             watchService.start();
             database.connect();
+	    database.dropTable();
 	    database.createTableMail();
 	    
-	    database.insertIntoMail("test","test","test");
+	    //database.insertIntoMail("test","test","test");
 	    }
         catch (IOException e)
         {
