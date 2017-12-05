@@ -30,15 +30,19 @@ public class Database {
 	}
     }
     
-        public void dropTableMail()
+        public void dropTable()
     {
 	try{
-	    statement.execute("DROP TABLE mail;");
-	    System.out.println("Create table successfull!!");
+	    statement.execute("DROP TABLE IF EXISTS mail;");
+	    statement.execute("DROP TABLE IF EXISTS message;");
+	    statement.execute("DROP TABLE IF EXISTS authorization;");
+	    statement.execute("DROP TABLE IF EXISTS institution;");
+	    statement.execute("DROP TABLE IF EXISTS target;");
+	    
 	}
 	catch(SQLException e)
 	{
-	    System.out.println("Error : create table");
+	    System.out.println("Error : DROP TABLE");
 	    e.printStackTrace();
 	}
     }
@@ -47,7 +51,11 @@ public class Database {
     public void createTableMail()
     {
 	try{
-	statement.execute("CREATE TABLE IF NOT EXISTS mail ( id integer PRIMARY KEY , mail VARCHAR(255) NOT NULL , lastname VARCHAR(255) NOT NULL , firstname VARCHAR(255) NOT NULL);");
+	    statement.execute("CREATE TABLE IF NOT EXISTS institution (institutionid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,name VARCHAR(255) NOT NULL);");
+	    statement.execute("CREATE TABLE IF NOT EXISTS mail (mailid VARCHAR(255) NOT NULL PRIMARY KEY , lastname VARCHAR(255) NOT NULL , firstname VARCHAR(255) NOT NULL, institutionID INT NOT NULL);");
+	    statement.execute("CREATE TABLE IF NOT EXISTS message (messageid INT AUTO_INCREMENT PRIMARY KEY NOT NULL, type VARCHAR(255) NOT NULL,emitterID INT NOT NULL, receiverID INT NOT NULL, emissionDate DATE);");
+	    statement.execute("CREATE TABLE IF NOT EXISTS authorization (authorizationid INT AUTO_INCREMENT PRIMARY KEY NOT NULL , authemitterID INT NOT NULL , authreceiverID INT NOT NULL , endDate DATE);");
+	    statement.execute("CREATE TABLE IF NOT EXISTS target (messageID INT NOT NULL, mailaddress VARCHAR(255) NOT NULL);");
 	    System.out.println("Create table successfull!!");
 	}
 	catch(SQLException e)
