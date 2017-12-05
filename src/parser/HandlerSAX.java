@@ -266,7 +266,7 @@ public class HandlerSAX extends DefaultHandler
         {
             dernierARemplir = "";
             //On fixe le mail du destinataire
-            message.setMailDest(contenu);
+            message.addMailDest(contenu);
         }
         
         if(dernierARemplir.compareTo("mailExp")==0)
