@@ -10,6 +10,8 @@ import data.Document;
 import java.io.IOException;
 
 import data.Global;
+import data.Message;
+import data.TypeMessage;
 import parser.HandlerSAX;
 import parser.ParserSAX;
 import parser.Validating;
@@ -136,8 +138,7 @@ public class Server
      */
     private Boolean verification(Document doc)
     {
-        //TODO 
-        return true;
+        return doc.getNombreMessage() == doc.getNombreMessageAnnonce();
     }
 
     /**
@@ -147,7 +148,74 @@ public class Server
      */
     private String consideration(Document doc)
     {
-        //TODO
+        for (int i=0; i<doc.getNombreMessage(); i++)
+        {
+            Message m = doc.getMessage(i);
+            boolean reject = false;
+//            List<String> listDest = m.getMailDest();
+//            if (listDest != null)
+//            {
+//                for (int j=0; j<listDest.size(); j++)
+//                {
+//                    if (! existsInDB(listDest.get(i))) //Si l'email n'existe pas
+//                        reject = true; //Il faudra rejeter le message
+//                }
+//            }
+            TypeMessage type = m.getTypeMessage();
+            String id = m.getId();
+            switch (type)
+            {
+                case AUTORISATION:
+                
+                    break;
+                
+                case DEMANDE:
+                    String sujetDemande = m.getDemande().getSujet();
+                    if (sujetDemande.length()>100 || sujetDemande.length()<2)
+                    {
+                        System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
+                        reject = true;
+                    }
+                    String contenuDemande = m.getDemande().getSujet();
+                    if (contenuDemande.length()>1000 || contenuDemande.length()<2)
+                    {
+                        System.err.println("Le contenu du message "+id+" ne respecte pas le nombre de caratère.");
+                        reject = true;
+                    }
+                    
+                    break;
+                    
+                case INFORMATION :
+                    String sujetInfo = m.getInformation().getSujet();
+                    if (sujetInfo.length()>100 || sujetInfo.length()<2)
+                    {
+                        System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
+                        reject = true;
+                    }
+                    String contenuInfo = m.getInformation().getContenuTexte();
+                    if (contenuInfo.length()>1000 || contenuInfo.length()<2)
+                    {
+                        System.err.println("Le contenu du message "+id+" ne respecte pas le nombre de caratère.");
+                        reject = true;
+                    }
+                    break;
+                    
+                case REPONSE :
+                    String sujetReponse = m.getReponse().getSujet();
+                    if (sujetReponse.length()>100 || sujetReponse.length()<2)
+                    {
+                        System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
+                        reject = true;
+                    }
+                    String contenuReponse = m.getReponse().getContenuTexte();
+                    if (contenuReponse.length()>100 || contenuReponse.length()<2)
+                    {
+                        System.err.println("Le contenu du message "+id+" ne respecte pas le nombre de caratère.");
+                        reject = true;
+                    }
+                    break;
+            }
+        }
         return "";
     }
 
