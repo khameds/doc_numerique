@@ -19,7 +19,7 @@ public class Message
     
     public Message()
     {
-        
+        mailDest = new ArrayList<>();
     }
     
     public Message(TypeMessage type)
@@ -68,6 +68,11 @@ public class Message
     public void setMailExp(String mailExp)
     {
         this.mailExp = mailExp;
+    }
+    
+    public void addMailDest(String mail)
+    {
+        mailDest.add(mail);
     }
 
     public ArrayList<String> getMailDest()
