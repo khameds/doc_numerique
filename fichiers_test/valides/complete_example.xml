@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Fichier de Test :
-  Cible : Validation de la structure du fichier
+  Cible : Validation de la syntaxe et de la semantique du fichier
   Test : Definition d'un fichier valide contenant tout les types de messages possible (information, demande, reponse, autorisation)
   Résultat attendu : Fichier validé par le parser SAX.
 -->
@@ -15,7 +15,7 @@
     </header>
     <collMess>
         <message messageId="m1">
-            <emailDest>marquie@dorsal.fr</emailDest>
+            <emailDest>mail1@univ.fr</emailDest>
             <emailExp>jean@michel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
@@ -27,7 +27,8 @@
             </information>
         </message>
         <message messageId="m2">
-            <emailDest>marquie2@dorsal.fr</emailDest>
+            <emailDest>mail1@univ.fr</emailDest>
+            <emailDest>mail2@univ.fr</emailDest>
             <emailExp>jean2@michel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
@@ -39,10 +40,8 @@
             </information>
         </message>
         <message messageId="m3">
-            <emailDest>aa@maaaaaa.fr</emailDest>
-            <emailDest>aaf@maaaaaa.fr</emailDest>
             <emailExp>jean@michel.fr</emailExp>
-            <demande authId="a10" dateSign="2018-01-01">
+            <demande authId="a10">
                 <sujet>sujet de la demande 1</sujet>
                 <dateDebut>2018-01-01</dateDebut>
                 <duree>
@@ -51,23 +50,37 @@
             </demande>
         </message>
         <message messageId="m4">
-            <emailDest>dddd@ddz.de</emailDest>
-            <emailExp>eeeee@eez.el</emailExp>
+            <emailDest>institution@univ.fr</emailDest>
+            <emailExp>azerty@ee.el</emailExp>
             <autorisation>
-                <autorisationID>a12345</autorisationID>
-                <dateDebut>2018-01-01</dateDebut>
+                <autorisationID>a10</autorisationID>
+                <dateDebut>2017-12-01</dateDebut>
                 <duree>
                     <mois>3</mois>
                 </duree>
             </autorisation>
         </message>
         <message messageId="m5">
-            <emailDest>bbb@bbz.fr</emailDest>
-            <emailExp>aaa@aaz.aa</emailExp>
-            <reponse messageId="m345" reponseId="r112">
-                <sujet>Reponse a message id: m345</sujet>
-                <contenuTexte>Ceci est le contenu du message id:1</contenuTexte>
-            </reponse>
+            <emailDest>mail1@univ.fr</emailDest>
+            <emailExp>eeeee@eez.el</emailExp>
+            <autorisation>
+                <autorisationID>a12345</autorisationID>
+                <dateDebut>2017-11-01</dateDebut>
+                <duree>
+                    <mois>5</mois>
+                </duree>
+            </autorisation>
+        </message>
+        <message messageId="m6">
+            <emailDest>institution@univ.fr</emailDest>
+            <emailExp>azerty@ee.el</emailExp>
+            <demande authId="a1">
+                <sujet>une demande</sujet>
+                <dateDebut>2018-01-01</dateDebut>
+                <duree>
+                    <semaines>3</semaines>
+                </duree>
+            </demande>
         </message>
     </collMess>
 </fichier>
