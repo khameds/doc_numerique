@@ -137,7 +137,7 @@ public class Server
         }
         else
         {
-            System.err.println("ERREUR Fichier non validé");
+            System.err.println("ERREUR Fichier non validé car le nombre de message indiqué ne correspond pas.");
 
             //Affichage de test des données importés
             System.out.println(doc);
@@ -205,8 +205,7 @@ public class Server
                         System.err.println("La date du message "+id+" n'est pas valide");
                         reject = true;
                     }
-                    isValidDate(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree());
-
+                    
                     break;
                 
                 case DEMANDE:
