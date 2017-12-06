@@ -135,7 +135,7 @@ public class Server
     }
 
     /**
-     *  Vérifications selon le type de la requete des dates, droits, ..
+     *  Vérifications bloquante pour la suite de la lecture (ne concerne pas les erreurs de messages qui engendre seulement le passage au message suivant)
      * @param doc Document XML reçu
      * @return Vrai si le document est ok, Faux sinon
      */
