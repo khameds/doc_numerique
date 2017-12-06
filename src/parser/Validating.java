@@ -16,7 +16,6 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author chris
  */
 public class Validating
 {
