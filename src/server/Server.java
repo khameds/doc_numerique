@@ -86,7 +86,8 @@ public class Server
 	    database.dropTable();
 	    database.createTableMail();
 	    
-	    database.insertIntoMail("test","test","test",1);
+	    database.insertIntoMail("test","test","test");
+	    System.out.println(database.mailExist("test"));
 	    }
         catch (IOException e)
         {
@@ -166,6 +167,10 @@ public class Server
             {
                 for (int j=0; j<listDest.size(); j++)
                 {
+		    if(!database.mailExist(listDest.get(i)))
+		    {
+			reject = true;
+		    }
 //                    if (! existsInDB(listDest.get(i))) //Si l'email n'existe pas
 //                        reject = true; //Il faudra rejeter le message
                 }

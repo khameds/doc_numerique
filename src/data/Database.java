@@ -14,17 +14,39 @@ public class Database {
         DBPath = dBPath;
     }
     
-    public void insertIntoMail(String mail, String firstname, String lastname,int id)
+    public boolean mailExist(String mail)
     {
-	String sql = "INSERT INTO mail(mailid,lastname,firstname,institutionid) VALUES (?,?,?,?)";
+	String sql = "SELECT COUNT(mailid) FROM mail WHERE mailid='" + mail +"';";
+	try {
+	    ResultSet rs = statement.executeQuery(sql);
+	    while(rs.next())
+	    {
+		int count = rs.getInt("COUNT(mailid)");
+		if(count == 0)
+		    return false;
+		else
+		    return true;
+	    }
+	} catch (SQLException ex) {
+	    System.out.println("MailExist fail");
+	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	
+	return true;
+    }
+    
+    public void insertIntoMail(String mail, String firstname, String lastname)
+    {
+	String sql = "INSERT INTO mail(mailid,lastname,firstname) VALUES (?,?,?)";
 	try {
 	    PreparedStatement test = connection.prepareStatement(sql);
 	    test.setString(1,mail);
 	    test.setString(2,lastname);
 	    test.setString(3,firstname);
-	    test.setInt(4,id);
+	    test.execute();
 	    System.out.println("Add mail success");
 	} catch (SQLException ex) {
+	    System.out.println("insertIntoMail fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
@@ -36,8 +58,10 @@ public class Database {
 	    PreparedStatement test = connection.prepareStatement(sql);
 	    test.setString(1,nom);
 	    test.setString(2,mail);
+	    test.execute();
 	    System.out.println("Add Institution success");
 	} catch (SQLException ex) {
+	    System.out.println("insertIntoInstitution fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
@@ -49,8 +73,10 @@ public class Database {
 	    PreparedStatement test = connection.prepareStatement(sql);
 	    test.setString(1,content);
 	    test.setString(2,emissionDate);
+	    test.execute();
 	    System.out.println("Add message success");
 	} catch (SQLException ex) {
+	    System.out.println("insertIntoMessage fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
@@ -63,8 +89,10 @@ public class Database {
 	    test.setString(1,institutionID);
 	    test.setString(2,mailID);
 	    test.setString(3,endDate);
+	    test.execute();
 	    System.out.println("Add Auth success");
 	} catch (SQLException ex) {
+	    System.out.println("insertIntoAuth fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
@@ -76,8 +104,10 @@ public class Database {
 	    PreparedStatement test = connection.prepareStatement(sql);
 	    test.setString(1,messageID);
 	    test.setString(2,mailaddress);
+	    test.execute();
 	    System.out.println("Add target success");
 	} catch (SQLException ex) {
+	    System.out.println("insertTarget fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
@@ -90,8 +120,10 @@ public class Database {
 	    test.setString(1,institutionID);
 	    test.setString(2,externauthoID);
 	    test.setString(3,endDate);
+	    test.execute();
 	    System.out.println("Add extern auth success");
 	} catch (SQLException ex) {
+	    System.out.println("insertIntoExtern fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
@@ -119,7 +151,7 @@ public class Database {
     {
 	try{
 	    statement.execute("CREATE TABLE IF NOT EXISTS institution (institutionid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,name VARCHAR(255) NOT NULL, mail VARCHAR(255));");
-	    statement.execute("CREATE TABLE IF NOT EXISTS mail (mailid VARCHAR(255) NOT NULL PRIMARY KEY , lastname VARCHAR(255) NOT NULL , firstname VARCHAR(255) NOT NULL, institutionID INT NOT NULL);");
+	    statement.execute("CREATE TABLE IF NOT EXISTS mail (mailid VARCHAR(255) NOT NULL PRIMARY KEY , lastname VARCHAR(255) NOT NULL , firstname VARCHAR(255) NOT NULL);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS message (messageid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,content TEXT NOT NULL, emissionDate DATE);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS authorization (authorizationid VARCHAR PRIMARY KEY NOT NULL , institutionID INT NOT NULL , mailID INT NOT NULL , endDate DATE);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS target (messageID INT NOT NULL, mailaddress VARCHAR(255) NOT NULL);");
