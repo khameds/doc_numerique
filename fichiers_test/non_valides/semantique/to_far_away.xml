@@ -15,7 +15,7 @@ Résultat attendu : Le message doit être rejeté.
     </header>
     <collMess>
         <message messageId="m1">
-            <emailDest>mail_inconnu@univ.fr</emailDest>
+            <emailDest>mail1@univ.fr</emailDest>
             <emailExp>jacquie@michel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
