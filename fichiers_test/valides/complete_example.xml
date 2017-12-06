@@ -39,9 +39,9 @@
             </information>
         </message>
         <message messageId="m3">
-            <emailExp>jean@michel.fr</emailExp>
             <emailDest>aa@maaaaaa.fr</emailDest>
             <emailDest>aaf@maaaaaa.fr</emailDest>
+            <emailExp>jean@michel.fr</emailExp>
             <demande authId="a10" dateSign="2018-01-01">
                 <sujet>sujet de la demande 1</sujet>
                 <dateDebut>2018-01-01</dateDebut>
