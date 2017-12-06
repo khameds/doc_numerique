@@ -90,7 +90,6 @@ public class Server
 	    database.dropTable();
 	    database.createTableMail();
 	    database.addData();
-	    System.out.println(database.mailExist("test"));
 	    }
         catch (IOException e)
         {
