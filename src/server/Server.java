@@ -13,7 +13,13 @@ import java.io.IOException;
 import data.Global;
 import data.Message;
 import data.TypeMessage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import parser.HandlerSAX;
 import parser.ParserSAX;
 import parser.Validating;
@@ -57,13 +63,13 @@ public class Server
                 public void onFileCreate(String newFilePath)
                 {
                     System.out.println("creation of " + newFilePath);
-                    startComputing(Global.FILE_RECEIVING_FOLDER + newFilePath);
+                    startComputing(Global.FILE_RECEIVING_FOLDER + "/" + newFilePath);
                 }
                 @Override
                 public void onFileModify(String newFilePath)
                 {
                     System.out.println("modification of " + newFilePath);
-                    startComputing(Global.FILE_RECEIVING_FOLDER + newFilePath);
+                    startComputing(Global.FILE_RECEIVING_FOLDER + "/" + newFilePath);
                 }
                 @Override
                 public void onFileDelete(String newFilePath)
@@ -93,7 +99,7 @@ public class Server
      * @param pathToXMLFile Path to the XML file
      */
     public void startComputing(String pathToXMLFile)
-    {
+    {        
         //XSD utilisé
         String pathToXSD = Global.XSD_FILE_PATH;
         String outputXMLFile = Global.OUTPUT_TRACE_FILE_PATH;
@@ -111,7 +117,7 @@ public class Server
         //On parse le XML
         HandlerSAX handlerFile = new HandlerSAX(doc);
         parser.monParsing(handlerFile, pathToXMLFile);
-
+        
         //Vérification des données
         verified = verification(doc); //TODO
 
@@ -135,7 +141,7 @@ public class Server
     }
 
     /**
-     *  Vérifications selon le type de la requete des dates, droits, ..
+     *  Vérifications bloquante pour la suite de la lecture (ne concerne pas les erreurs de messages qui engendre seulement le passage au message suivant)
      * @param doc Document XML reçu
      * @return Vrai si le document est ok, Faux sinon
      */
@@ -226,7 +232,11 @@ public class Server
                     break;
             }
         }
-        return "";
+        
+        // EXEMPLE DE LOG
+        // Logger.getLogger(Server.class.getName()).log(Level.INFO,"SALUT");
+        
+        return "(XML DE SORTIE)";
     }
 
     /**
@@ -235,7 +245,21 @@ public class Server
      */
     private void writeResponse(String outputXMLFile)
     {
-        System.out.println("OUTPUT = " + outputXMLFile); //TEMPORAIRE
+        System.out.println("OUTPUT XML = " + outputXMLFile); //TEMPORAIRE
         //Il faudra écrire ça dans un fichier de sortie
+        
+        try
+        {
+            FileOutputStream fos = new FileOutputStream(new File("OutputFolder/"+new Date().toString().replace(":", "-")+".xml")); //Le nom du fichier de sortie est la date
+            fos.write(outputXMLFile.getBytes());
+        }
+        catch (FileNotFoundException ex)
+        {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
