@@ -172,7 +172,6 @@ public class HandlerSAX extends DefaultHandler
             
             //2 attributs
             demande.setAuthId(attributes.getValue("authId"));
-            demande.setDateSign(new SimpleDateFormat(attributes.getValue("dateSign")));
             
             dernierARemplir = "demande";
         }
