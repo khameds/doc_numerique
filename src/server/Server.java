@@ -73,7 +73,7 @@ public class Server
                 public void onFileModify(String newFilePath)
                 {
                     System.out.println("modification of " + newFilePath);
-                    //startComputing(Global.FILE_RECEIVING_FOLDER + "/" + newFilePath);
+                    startComputing(Global.FILE_RECEIVING_FOLDER + "/" + newFilePath);
                 }
                 @Override
                 public void onFileDelete(String newFilePath)
@@ -174,6 +174,7 @@ public class Server
                 {
 		    if(!database.mailExist(listDest.get(i)))
 		    {
+                        System.err.println("Le mail est inexistant");
 			reject = true;
 		    }
 //                    if (! existsInDB(listDest.get(i))) //Si l'email n'existe pas
