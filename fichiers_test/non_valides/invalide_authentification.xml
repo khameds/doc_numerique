@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Fichier de Test :
+Cible : Detection de d'identifiant d'autentification invalides
+Test : Definition d'un fichier coontenant un message de demande avec une autentification inconnue.
+Résultat attendu : Le message doit être rejeté.
+-->
+
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+
+    <header fileId="f1">
+        <nbMessages>1</nbMessages>
+        <institution>L'institution</institution>
+    </header>
+    <collMess>
+        <message>
+            <demande authId="azerty!">
+                <sujet>authID invalide</sujet>
+                <dateDebut>2018-01-01</dateDebut>
+                <duree>
+                    <semaines>3</semaines>
+                </duree>
+            </demande>
+        </message>
+    </collMess>
+</fichier>

@@ -73,7 +73,7 @@ public class Server
                 public void onFileModify(String newFilePath)
                 {
                     System.out.println("modification of " + newFilePath);
-                    //startComputing(Global.FILE_RECEIVING_FOLDER + "/" + newFilePath);
+                    startComputing(Global.FILE_RECEIVING_FOLDER + "/" + newFilePath);
                 }
                 @Override
                 public void onFileDelete(String newFilePath)
@@ -172,6 +172,7 @@ public class Server
                 {
 		    if(!database.mailExist(listDest.get(j)))
 		    {
+                        System.err.println("Le mail est inexistant");
 			reject = true;
 		    }
 //                    if (! existsInDB(listDest.get(i))) //Si l'email n'existe pas
@@ -190,6 +191,11 @@ public class Server
             switch (type)
             {
                 case AUTORISATION:
+                    if (listDest.size()!=1 || doc.getListeMessage().get(i).getMailExp()==null)
+                    {
+                        System.err.println("L'autorisation "+id+" n'est pas valide. Il doit y avoir 1 mail expéditeur et 1 mail destinataire.");
+                        reject = true;
+                    }
                     
                     if ( ! isValidDate(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree()))
                     {
