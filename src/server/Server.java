@@ -161,10 +161,13 @@ public class Server
      */
     private String consideration(Document doc)
     {
+	String response = "";
         System.out.println(doc.toString());
         for (int i=0; i<doc.getNombreMessage(); i++)
         {
+	    
             Message m = doc.getMessage(i);
+	    response += "<message id='"+m.getId()+"'>\n";
             boolean reject = false;
             List<String> listDest = m.getMailDest();
             if (listDest != null)
@@ -175,6 +178,7 @@ public class Server
 		    if(!database.mailExist(listDest.get(j)))
 		    {
                         System.err.println("Le mail est inexistant");
+			response += "\t<error>L'un des mails destinataires n'est pas bon</error>\n";
 			reject = true;
 		    }
 //                    if (! existsInDB(listDest.get(i))) //Si l'email n'existe pas
@@ -188,38 +192,45 @@ public class Server
             if (! m.toString().matches("\\A\\p{ASCII}*\\z")) //Faudra tester ça
             {
                 System.err.println("Le message contient des caractères non ASCII");
+		response += "\t<error>Le message contient des caractères non ASCII</error>\n";
                 reject = true;
             }
             
             switch (type)
             {
                 case AUTORISATION:
+		    response += "\t<type>AUTORISATION</type>\n";
                     if (listDest.size()!=1 || doc.getListeMessage().get(i).getMailExp()==null)
                     {
                         System.err.println("L'autorisation "+id+" n'est pas valide. Il doit y avoir 1 mail expéditeur et 1 mail destinataire.");
-                        reject = true;
+                        response += "\t<error>L'autorisation n'est pas valide, il faut 1 mail expéditeur, 1 mail destinataire</error>\n";
+			reject = true;
                     }
                     
                     if ( ! isValidDate(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree()))
                     {
                         System.err.println("La date du message "+id+" n'est pas valide");
+			response += "\t<error>La date du message n'est pas valide</error>\n";
                         reject = true;
                     }
                     
                     break;
                 
                 case DEMANDE:
-                    
+                    response += "\t<type>DEMANDE</type>\n";
                     if ( ! isValidDate(m.getDemande().getDateDebut(), m.getDemande().getDuree()))
                     {
                         System.err.println("La date du message "+id+" n'est pas valide");
+			response += "\t<error>La date du message n'est pas valide</error>\n";
                         reject = true;
                     }
                     
 		    if (listDest.size()<1 || doc.getListeMessage().get(i).getMailExp()==null)
 		    {
 			System.err.println("La demande "+id+" n'est pas valide. Il doit y avoir 1 mail expéditeur et au moins 1 mail destinataire.");
-                        reject = true;
+                        response += "\t<error>La demande n'est pas valide, il faut 1 mail expéditeur, 1 mail destinataire</error>\n";
+
+			reject = true;
 		    }
 		    
                     String sujetDemande = m.getDemande().getSujet();
@@ -227,12 +238,14 @@ public class Server
                     if (sujetDemande.length()>100 || sujetDemande.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
+			response += "\t<error>Le sujet du message ne respecte pas le nombre de caratère</error>\n";
                         reject = true;
                     }
                     String contenuDemande = m.getDemande().getSujet();
                     if (contenuDemande.length()>1000 || contenuDemande.length()<2)
                     {
                         System.err.println("Le contenu du message "+id+" ne respecte pas le nombre de caratère.");
+			response += "\t<error>Le contenu du message ne respecte pas le nombre de caratère</error>\n";
                         reject = true;
                     }
 		    
@@ -241,6 +254,7 @@ public class Server
 		    if(idInstitution == -1)
 		    {
 			System.err.println("L'institution exterieure de "+id+" est inconnue!");
+			response += "\t<error>L'institution exterieure est inconnue!</error>\n";
                         reject = true;
 		    }
 		    String idAuth = m.getDemande().getAuthId();
@@ -249,6 +263,7 @@ public class Server
 			if(!database.checkAuthorization(idInstitution,idAuth,listDest.get(j)))
 			{
 			    System.err.println("L'autorisation de"+id+" n'est pas bonne");
+			    response += "\t<error>L'institution exterieure n'a pas la bonne autorisation!</error>\n";
 			    reject = true;
 			}
 		    }
@@ -258,10 +273,11 @@ public class Server
                     break;
                     
                 case INFORMATION :
-                    
+                    response += "\t<type>INFORMATION</type>\n";
                     if ( ! isValidDate(m.getInformation().getDateDebut(), m.getInformation().getDuree()))
                     {
                         System.err.println("La date du message "+id+" n'est pas valide");
+			response += "\t<error>La date du message n'est pas valide</error>\n";
                         reject = true;
                     }
                     String sujetInfo = m.getInformation().getSujet();
@@ -269,12 +285,14 @@ public class Server
                     if (sujetInfo.length()>100 || sujetInfo.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
+			response += "\t<error>Le sujet n'a pas le bon nombre de caractère</error>\n";
                         reject = true;
                     }
                     String contenuInfo = m.getInformation().getContenuTexte();
                     if (contenuInfo.length()>1000 || contenuInfo.length()<2)
                     {
                         System.err.println("Le contenu du message "+id+" ne respecte pas le nombre de caratère.");
+			response += "\t<error>Le contenu n'a pas le bon nombre de caractère</error>\n";
                         reject = true;
                     }
                     break;
@@ -299,17 +317,19 @@ public class Server
             if (!reject)
             {
                 System.out.println("Il faut ajouter le message à la BDD");
+		response += "\t<succes>Le message est bon!</succes>\n</message>\n";
             }
             else 
             {
                 System.out.println("Le message "+ id + "va être supprimer.");
+		response += "\t<Fail>Le message doit être réédité</Fail>\n</message>\n";
             }
         }
         
         // EXEMPLE DE LOG
         // Logger.getLogger(Server.class.getName()).log(Level.INFO,"SALUT");
         
-        return "(XML DE SORTIE)";
+        return response;
     }
 
     /**

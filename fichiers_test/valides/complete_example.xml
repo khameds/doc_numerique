@@ -5,7 +5,7 @@
   Résultat attendu : Fichier validé par le parser SAX.
 -->
 
-<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
 
     <header fileId="f3">
