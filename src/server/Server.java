@@ -89,8 +89,7 @@ public class Server
             database.connect();
 	    database.dropTable();
 	    database.createTableMail();
-	    
-	    database.insertIntoMail("test","test","test");
+	    database.addData();
 	    System.out.println(database.mailExist("test"));
 	    }
         catch (IOException e)
@@ -172,7 +171,7 @@ public class Server
             {
                 for (int j=0; j<listDest.size(); j++)
                 {
-		    if(!database.mailExist(listDest.get(i)))
+		    if(!database.mailExist(listDest.get(j)))
 		    {
 			reject = true;
 		    }
