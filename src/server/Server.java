@@ -57,7 +57,11 @@ public class Server
     public void start()
     {
         DirectoryWatchService watchService = null;
-
+	database.connect();
+	database.dropTable();
+	database.createTableMail();
+	database.addData();
+	database.close();
         try
         {
             watchService = new SimpleDirectoryWatchService();
@@ -86,11 +90,7 @@ public class Server
             );
 
             watchService.start();
-            database.connect();
-	    database.dropTable();
-	    database.createTableMail();
-	    database.addData();
-	    database.close();
+
 	    }
         catch (IOException e)
         {
@@ -171,6 +171,7 @@ public class Server
             {
                 for (int j=0; j<listDest.size(); j++)
                 {
+		    database.connect();
 		    if(!database.mailExist(listDest.get(j)))
 		    {
                         System.err.println("Le mail est inexistant");
@@ -178,6 +179,7 @@ public class Server
 		    }
 //                    if (! existsInDB(listDest.get(i))) //Si l'email n'existe pas
 //                        reject = true; //Il faudra rejeter le message
+		    database.close();
                 }
             }
             TypeMessage type = m.getTypeMessage();
@@ -215,6 +217,12 @@ public class Server
                         reject = true;
                     }
                     
+		    if (listDest.size()!=0 || doc.getListeMessage().get(i).getMailExp()==null)
+		    {
+			System.err.println("La demande "+id+" n'est pas valide. Il doit y avoir 1 mail expéditeur et au moins 1 mail destinataire.");
+                        reject = true;
+		    }
+		    
                     String sujetDemande = m.getDemande().getSujet();
 
                     if (sujetDemande.length()>100 || sujetDemande.length()<2)
