@@ -27,6 +27,16 @@ public class Document
         this();
         this.id = id;
     }
+
+    public ArrayList<Message> getListeMessage()
+    {
+        return listeMessage;
+    }
+    
+    public void setListeMessage(ArrayList<Message> listeMessage)
+    {
+        this.listeMessage = listeMessage;
+    }
     
     public void addMessage(Message m)
     {     
