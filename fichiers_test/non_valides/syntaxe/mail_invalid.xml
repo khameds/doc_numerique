@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Fichier de Test :
- Cible : Validation de la structure du fichier
- Résultat attendu : Fichier rejeté car le fichier n'est pas "bien formé".
- Les balises "message" et"collMess" sont entrelassées.
+  Cible : Verification des adresses mails éventuelles
+  Résultat attendu : Fichier rejeté car format d'adresse mail invalide
 -->
 
-<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../fichiers_definitions/definition.xsd">
 
     <header fileId="f1">
         <nbMessages>1</nbMessages>
@@ -14,7 +13,7 @@
     </header>
     <collMess>
         <message messageId="m1">
-            <emailExp>jacquie@michel.fr</emailExp>
+            <emailExp>jsd   sfef</emailExp>
             <information>
                 <sujet>Michel</sujet>
                 <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
@@ -23,6 +22,6 @@
                     <semaines>1</semaines>
                 </duree>
             </information>
-        </collMess>
-    </message>
+        </message>
+    </collMess>
 </fichier>

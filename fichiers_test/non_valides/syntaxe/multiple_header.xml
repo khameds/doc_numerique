@@ -2,13 +2,22 @@
 
 <!-- Fichier de Test :
   Cible : Validation de la structure du fichier
-  Résultat attendu : Fichier rejeté car le noeud "header" est absent
+  Résultat attendu : Fichier rejeté car multiple déclaration de "header"
 -->
 
-<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../fichiers_definitions/definition.xsd">
+
+    <header fileId="f1">
+        <nbMessages>1</nbMessages>
+        <institution>L'institution</institution>
+    </header>
+    <header fileId="f2">
+        <nbMessages>1</nbMessages>
+        <institution>L'institution</institution>
+    </header>
     <collMess>
         <message messageId="m1">
-            <emailExp>marc@dorcel.fr</emailExp>
+            <emailExp>jacquie@michel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
                 <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
