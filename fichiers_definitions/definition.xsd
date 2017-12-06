@@ -62,9 +62,7 @@
             <xs:sequence>
                 <xs:element name="sujet">
                     <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:maxLength value="100"/>
-                        </xs:restriction>
+                        <xs:restriction base="xs:string"/>
                     </xs:simpleType>
                 </xs:element>
                 <xs:element name="dateDebut" type="xs:date"/>
