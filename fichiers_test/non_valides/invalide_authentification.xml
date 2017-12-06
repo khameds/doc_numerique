@@ -15,7 +15,7 @@ Résultat attendu : Le message doit être rejeté.
     </header>
     <collMess>
         <message>
-            <demande authId="azerty">
+            <demande authId="azerty!">
                 <sujet>authID invalide</sujet>
                 <dateDebut>2018-01-01</dateDebut>
                 <duree>
