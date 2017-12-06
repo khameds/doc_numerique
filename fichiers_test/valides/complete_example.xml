@@ -39,6 +39,7 @@
             </information>
         </message>
         <message messageId="m3">
+            <emailDest>institution@univ.fr</emailDest>
             <emailExp>jean@michel.fr</emailExp>
             <demande authId="a10">
                 <sujet>sujet de la demande 1</sujet>
