@@ -116,8 +116,14 @@ public class Server
         doc = new Document();
 
         //Vérification XSD du fichier
-        Validating.validate(pathToXSD, pathToXMLFile);
+        Boolean xsdValidated = Validating.validate(pathToXSD, pathToXMLFile);
 
+        if(!xsdValidated)
+        {
+            System.err.println("ERREUR: Le fichier XML ne valide pas la XSD");
+            return;
+        }
+        
         //On parse le XML
         HandlerSAX handlerFile = new HandlerSAX(doc);
         parser.monParsing(handlerFile, pathToXMLFile);
@@ -174,18 +180,36 @@ public class Server
             {
                 for (int j=0; j<listDest.size(); j++)
                 {
-		    database.connect();
-		    if(!database.mailExist(listDest.get(j)))
-		    {
-                        System.err.println("Le mail est inexistant");
-			response += "\t<error>L'un des mails destinataires n'est pas bon</error>\n";
-			reject = true;
-		    }
-//                    if (! existsInDB(listDest.get(i))) //Si l'email n'existe pas
-//                        reject = true; //Il faudra rejeter le message
-		    database.close();
+                    if (!isValidEmailAddress(listDest.get(j)))
+                    {
+                        System.err.println("Le mail est invalide");
+                        response += "\t<error>L'un des mails destinataires n'est pas valide</error>\n";
+                        reject = true;
+                    }
+                    else
+                    {
+                        database.connect();
+                        if(!database.mailExist(listDest.get(j)))
+                        {
+                            System.err.println("Le mail est inexistant");
+                            response += "\t<error>L'un des mails destinataires n'est pas bon</error>\n";
+                            reject = true;
+                        }
+                        database.close();
+                    }
                 }
             }
+            
+            if (m.getMailExp()!=null)
+            {
+                if (! isValidEmailAddress(m.getMailExp()))
+                {
+                    System.err.println("Le mail est invalide");
+                    response += "\t<error>Le mail expéditeur n'est pas valide</error>\n";
+                    reject = true;
+                }
+            }
+            
             TypeMessage type = m.getTypeMessage();
             String id = m.getId();
             
@@ -213,6 +237,16 @@ public class Server
 			response += "\t<error>La date du message n'est pas valide</error>\n";
                         reject = true;
                     }
+                    
+                    if (! reject)
+                    {
+                        database.connect();
+                        String idInstitution = String.valueOf(database.GetInstitutionIDFromMail(m.getMailExp()));
+                        String dateFin = dateFin(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree());
+                        database.insertIntoExtern(idInstitution, m.getAutorisation().getId(), dateFin);
+                        database.close();
+                    }
+                    
                     
                     break;
                 
@@ -262,7 +296,7 @@ public class Server
 		    {
 			if(!database.checkAuthorization(idInstitution,idAuth,listDest.get(j)))
 			{
-			    System.err.println("L'autorisation de"+id+" n'est pas bonne");
+			    System.err.println("L'autorisation de "+id+" n'est pas bonne");
 			    response += "\t<error>L'institution exterieure n'a pas la bonne autorisation!</error>\n";
 			    reject = true;
 			}
@@ -373,14 +407,14 @@ public class Server
     
     private boolean isValidDate(SimpleDateFormat date, String duree)
     {
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd"); //On crée un format
+        Calendar c = Calendar.getInstance(); //On crée une instance de date Calendar
         
-        Date d = new Date();
+        Date d = new Date(); //Date de maintenant
         try
         {
             if (date != null)
-                d = simpleFormat.parse(date.toPattern());
+                d = simpleFormat.parse(date.toPattern()); //On met la date qu'on a récupéré dans le XML dans le type Date
             else
                 return false;
         }
@@ -388,26 +422,26 @@ public class Server
         {
             return false;
         }
-        c.setTime(d);
+        c.setTime(d); //On met la date d'aujourd'hui dans un Calendar
         
-        Calendar dateDebut = (Calendar) c.clone();
+        Calendar dateDebut = (Calendar) c.clone(); //On sauvegarde la date de debut (XML)
         
         if (duree == null)
             return true;
         
-        if (duree.contains("semaine"))
+        if (duree.contains("semaine")) //Duree en semaine
         {
             int nbSemaine = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de semaines.
-            c.add(Calendar.DATE, nbSemaine*7);
+            c.add(Calendar.DATE, nbSemaine*7); //On ajoute le nombre de semaines
         }
         
         if (duree.contains("mois"))
         {
             int nbMois = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de mois.
-            c.add(Calendar.MONTH, nbMois);
+            c.add(Calendar.MONTH, nbMois); //On ajoute le nombre de mois 
         }
         
-        Calendar dateFin = c;
+        Calendar dateFin = c; //C'est maintenant la date de fin
         
         Calendar aujourdhui = Calendar.getInstance();
         
@@ -421,5 +455,44 @@ public class Server
         
 
         return true;
+    }
+
+    private String dateFin(SimpleDateFormat dateDebut, String duree)
+    {
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        
+        Date d = new Date();
+        try
+        {
+            d = simpleFormat.parse(dateDebut.toPattern());
+        } catch (ParseException ex)
+        {
+        }
+        
+        c.setTime(d);
+        
+        if (duree.contains("semaine")) //Duree en semaine
+        {
+            int nbSemaine = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de semaines.
+            c.add(Calendar.DATE, nbSemaine*7); //On ajoute le nombre de semaines
+        }
+        
+        if (duree.contains("mois"))
+        {
+            int nbMois = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de mois.
+            c.add(Calendar.MONTH, nbMois); //On ajoute le nombre de mois 
+        }
+        
+        return simpleFormat.format(c.getTime());
+        
+    }
+    
+    private boolean isValidEmailAddress(String email)
+    {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 }
