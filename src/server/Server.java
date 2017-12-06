@@ -295,7 +295,16 @@ public class Server
 			    reject = true;
 			}
 		    }
+		    
+		    if(reject!=true)
+		    {
+			database.addMessageDemande(m.getDemande().getSujet(),m.getDemande().getDateDebut().toPattern(),listDest);
+		    }
+		    
+		    
 		    database.close();
+		    
+		    
 		    //for each dest, check if authorization is good
                     
                     break;
@@ -323,6 +332,12 @@ public class Server
 			response += "\t<error>Le contenu n'a pas le bon nombre de caractère</error>\n";
                         reject = true;
                     }
+		    if(reject!=true)
+		    {
+			database.connect();
+			database.addMessage(sujetInfo,contenuInfo,m.getInformation().getDateDebut().toPattern());
+			database.close();
+		    }
                     break;
                     
                 case REPONSE :
