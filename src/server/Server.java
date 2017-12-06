@@ -214,6 +214,16 @@ public class Server
                         reject = true;
                     }
                     
+                    if (! reject)
+                    {
+                        database.connect();
+                        String idInstitution = String.valueOf(database.GetInstitutionIDFromMail(m.getMailExp()));
+                        String dateFin = dateFin(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree());
+                        database.insertIntoExtern(idInstitution, m.getAutorisation().getId(), dateFin);
+                        database.close();
+                    }
+                    
+                    
                     break;
                 
                 case DEMANDE:
@@ -358,14 +368,14 @@ public class Server
     
     private boolean isValidDate(SimpleDateFormat date, String duree)
     {
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd"); //On crée un format
+        Calendar c = Calendar.getInstance(); //On crée une instance de date Calendar
         
-        Date d = new Date();
+        Date d = new Date(); //Date de maintenant
         try
         {
             if (date != null)
-                d = simpleFormat.parse(date.toPattern());
+                d = simpleFormat.parse(date.toPattern()); //On met la date qu'on a récupéré dans le XML dans le type Date
             else
                 return false;
         }
@@ -373,26 +383,26 @@ public class Server
         {
             return false;
         }
-        c.setTime(d);
+        c.setTime(d); //On met la date d'aujourd'hui dans un Calendar
         
-        Calendar dateDebut = (Calendar) c.clone();
+        Calendar dateDebut = (Calendar) c.clone(); //On sauvegarde la date de debut (XML)
         
         if (duree == null)
             return true;
         
-        if (duree.contains("semaine"))
+        if (duree.contains("semaine")) //Duree en semaine
         {
             int nbSemaine = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de semaines.
-            c.add(Calendar.DATE, nbSemaine*7);
+            c.add(Calendar.DATE, nbSemaine*7); //On ajoute le nombre de semaines
         }
         
         if (duree.contains("mois"))
         {
             int nbMois = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de mois.
-            c.add(Calendar.MONTH, nbMois);
+            c.add(Calendar.MONTH, nbMois); //On ajoute le nombre de mois 
         }
         
-        Calendar dateFin = c;
+        Calendar dateFin = c; //C'est maintenant la date de fin
         
         Calendar aujourdhui = Calendar.getInstance();
         
@@ -406,5 +416,36 @@ public class Server
         
 
         return true;
+    }
+
+    private String dateFin(SimpleDateFormat dateDebut, String duree)
+    {
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        
+        Date d = new Date();
+        try
+        {
+            d = simpleFormat.parse(dateDebut.toPattern());
+        } catch (ParseException ex)
+        {
+        }
+        
+        c.setTime(d);
+        
+        if (duree.contains("semaine")) //Duree en semaine
+        {
+            int nbSemaine = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de semaines.
+            c.add(Calendar.DATE, nbSemaine*7); //On ajoute le nombre de semaines
+        }
+        
+        if (duree.contains("mois"))
+        {
+            int nbMois = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de mois.
+            c.add(Calendar.MONTH, nbMois); //On ajoute le nombre de mois 
+        }
+        
+        return simpleFormat.format(c.getTime());
+        
     }
 }
