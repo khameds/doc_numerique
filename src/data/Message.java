@@ -4,21 +4,22 @@
 */
 package data;
 
+import java.util.ArrayList;
+
 /**
  * 
- * @author Chris
  */
 public class Message
 {
     private String id;
     private TypeMessage typeMessage;
     private String mailExp;
-    private String mailDest;
+    private ArrayList<String> mailDest;
     private Contenu contenu;
     
     public Message()
     {
-        
+        mailDest = new ArrayList<>();
     }
     
     public Message(TypeMessage type)
@@ -68,13 +69,18 @@ public class Message
     {
         this.mailExp = mailExp;
     }
+    
+    public void addMailDest(String mail)
+    {
+        mailDest.add(mail);
+    }
 
-    public String getMailDest()
+    public ArrayList<String> getMailDest()
     {
         return mailDest;
     }
 
-    public void setMailDest(String mailDest)
+    public void setMailDest(ArrayList<String> mailDest)
     {
         this.mailDest = mailDest;
     }

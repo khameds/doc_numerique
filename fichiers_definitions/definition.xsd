@@ -50,7 +50,7 @@
     <xs:element name="autorisation">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="autorisationID" type="xs:positiveInteger"/>
+                <xs:element name="autorisationID" type="xs:string"/>
                 <xs:element name="dateDebut" type="xs:date"/>
                 <xs:element ref="duree"/>
             </xs:sequence>
@@ -87,7 +87,7 @@
                     </xs:simpleType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="messageId" type="xs:IDREF" use="required"/>
+            <xs:attribute name="messageId" type="xs:string" use="required"/>
             <xs:attribute name="reponseId" type="xs:ID" use="required"/>
         </xs:complexType>
     </xs:element>
@@ -99,7 +99,7 @@
                 <xs:element name="header">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="nbMessages" type="xs:positiveInteger"/>
+                            <xs:element name="nbMessages" minOccurs="0" type="xs:nonNegativeInteger"/>
                             <xs:element name="institution" type="xs:string"/>
                         </xs:sequence>
                         <xs:attribute name="fileId" type="xs:ID"/>
