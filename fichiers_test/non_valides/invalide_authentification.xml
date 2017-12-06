@@ -2,7 +2,7 @@
 
 <!-- Fichier de Test :
 Cible : Detection de d'identifiant d'autentification invalides
-Test : Definition d'un fichier coontenant un message de demande avec une autentification inconnue.
+Test : Definition d'un fichier contenant un message de demande avec une autentification inconnue.
 Résultat attendu : Le message doit être rejeté.
 -->
 
@@ -15,6 +15,8 @@ Résultat attendu : Le message doit être rejeté.
     </header>
     <collMess>
         <message>
+            <emailDest>mail1@univ.fr</emailDest>
+            <emailExp>jacquie@michel.fr</emailExp>
             <demande authId="azerty!">
                 <sujet>authID invalide</sujet>
                 <dateDebut>2018-01-01</dateDebut>
