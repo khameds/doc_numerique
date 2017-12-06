@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Fichier de Test :
+Cible : Detection de message trop loin dans le temps
+Test : Definition d'un fichier coontenant un message d'information avec une date trop éloignée.
+Résultat attendu : Le message doit être rejeté.
+-->
+
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+
+    <header fileId="f1">
+        <nbMessages>1</nbMessages>
+        <institution>L'institution</institution>
+    </header>
+    <collMess>
+        <message messageId="m1">
+            <emailDest>mail_inconnu@univ.fr</emailDest>
+            <emailExp>jacquie@michel.fr</emailExp>
+            <information>
+                <sujet>Michel</sujet>
+                <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
+                <dateDebut>2019-01-01</dateDebut>
+                <duree>
+                    <semaines>1</semaines>
+                </duree>
+            </information>
+        </message>
+    </collMess>
+</fichier>
