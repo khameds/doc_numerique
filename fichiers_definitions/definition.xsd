@@ -69,7 +69,6 @@
                 <xs:element ref="duree"/>
             </xs:sequence>
             <xs:attribute name="authId" type="xs:ID" use="required"/>
-            <xs:attribute name="dateSign" type="xs:date" use="required"/>
         </xs:complexType>
     </xs:element>
 
