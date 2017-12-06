@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Fichier de Test :
-  Cible : Validation de la structure du fichier
-  Résultat attendu : Fichier rejeté car multiple déclaration de "header"
+ Cible : Validation de la structure du fichier
+ Résultat attendu : Fichier rejeté car le fichier n'est pas "bien formé".
+ Les balises "message" et"collMess" sont entrelassées.
 -->
 
-<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../fichiers_definitions/definition.xsd">
 
     <header fileId="f1">
-        <nbMessages>1</nbMessages>
-        <institution>L'institution</institution>
-    </header>
-    <header fileId="f2">
         <nbMessages>1</nbMessages>
         <institution>L'institution</institution>
     </header>
@@ -26,6 +23,6 @@
                     <semaines>1</semaines>
                 </duree>
             </information>
-        </message>
-    </collMess>
+        </collMess>
+    </message>
 </fichier>

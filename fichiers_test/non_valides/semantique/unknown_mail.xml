@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Fichier de Test :
-  Cible : Validation de la structure du fichier
-  Résultat attendu : Fichier rejeté car le fichier n'est pas "bien formé".
-  La balise "CollMess" n'est pas fermée.
+Cible : Detection de mail inconnu
+Test : Definition d'un fichier coontenant un message d'information avec un mail destinataire inconnu de l'institution.
+Résultat attendu : Le message doit être rejeté.
 -->
 
-<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../../fichiers_definitions/definition.xsd">
 
     <header fileId="f1">
         <nbMessages>1</nbMessages>
@@ -14,6 +15,7 @@
     </header>
     <collMess>
         <message messageId="m1">
+            <emailDest>mail_inconnu@univ.fr</emailDest>
             <emailExp>jacquie@michel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
@@ -24,4 +26,5 @@
                 </duree>
             </information>
         </message>
+    </collMess>
 </fichier>
