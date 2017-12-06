@@ -57,13 +57,13 @@ public class Server
                 public void onFileCreate(String newFilePath)
                 {
                     System.out.println("creation of " + newFilePath);
-                    startComputing(Global.FILE_RECEIVING_FOLDER + newFilePath);
+                    startComputing(Global.FILE_RECEIVING_FOLDER + "/" + newFilePath);
                 }
                 @Override
                 public void onFileModify(String newFilePath)
                 {
                     System.out.println("modification of " + newFilePath);
-                    startComputing(Global.FILE_RECEIVING_FOLDER + newFilePath);
+                    startComputing(Global.FILE_RECEIVING_FOLDER + "/" + newFilePath);
                 }
                 @Override
                 public void onFileDelete(String newFilePath)
@@ -111,7 +111,7 @@ public class Server
         //On parse le XML
         HandlerSAX handlerFile = new HandlerSAX(doc);
         parser.monParsing(handlerFile, pathToXMLFile);
-
+        
         //Vérification des données
         verified = verification(doc); //TODO
 
