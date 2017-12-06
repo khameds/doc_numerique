@@ -228,7 +228,7 @@ public class Database {
     public void close() {
         try {
             connection.close();
-            statement.close();
+            //statement.close();
         } catch (SQLException e) {
             System.out.println("Error while closing database connection");
             e.printStackTrace();
