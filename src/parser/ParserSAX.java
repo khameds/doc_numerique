@@ -40,9 +40,9 @@ public class ParserSAX
         try
         {
             parser = factory.newSAXParser();
-            System.out.println(xml);
             InputStream xmlInput = new FileInputStream(xml);
             parser.parse(xmlInput, handler);
+            xmlInput.close();
         }
         catch (ParserConfigurationException | SAXException | IOException e)
         {

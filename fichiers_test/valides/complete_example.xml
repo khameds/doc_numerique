@@ -10,7 +10,7 @@
          xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
 
     <header fileId="f3">
-        <nbMessages>4</nbMessages>
+        <nbMessages>5</nbMessages>
         <institution>L'institution</institution>
     </header>
     <collMess>
