@@ -174,18 +174,36 @@ public class Server
             {
                 for (int j=0; j<listDest.size(); j++)
                 {
-		    database.connect();
-		    if(!database.mailExist(listDest.get(j)))
-		    {
-                        System.err.println("Le mail est inexistant");
-			response += "\t<error>L'un des mails destinataires n'est pas bon</error>\n";
-			reject = true;
-		    }
-//                    if (! existsInDB(listDest.get(i))) //Si l'email n'existe pas
-//                        reject = true; //Il faudra rejeter le message
-		    database.close();
+                    if (!isValidEmailAddress(listDest.get(j)))
+                    {
+                        System.err.println("Le mail est invalide");
+                        response += "\t<error>L'un des mails destinataires n'est pas valide</error>\n";
+                        reject = true;
+                    }
+                    else
+                    {
+                        database.connect();
+                        if(!database.mailExist(listDest.get(j)))
+                        {
+                            System.err.println("Le mail est inexistant");
+                            response += "\t<error>L'un des mails destinataires n'est pas bon</error>\n";
+                            reject = true;
+                        }
+                        database.close();
+                    }
                 }
             }
+            
+            if (m.getMailExp()!=null)
+            {
+                if (! isValidEmailAddress(m.getMailExp()))
+                {
+                    System.err.println("Le mail est invalide");
+                    response += "\t<error>Le mail expéditeur n'est pas valide</error>\n";
+                    reject = true;
+                }
+            }
+            
             TypeMessage type = m.getTypeMessage();
             String id = m.getId();
             
@@ -447,5 +465,13 @@ public class Server
         
         return simpleFormat.format(c.getTime());
         
+    }
+    
+    private boolean isValidEmailAddress(String email)
+    {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 }
