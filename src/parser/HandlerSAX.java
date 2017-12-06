@@ -105,14 +105,14 @@ public class HandlerSAX extends DefaultHandler
             dernierARemplir = "message";
         }
         
-        if(qName.compareTo("mailDest")==0)
+        if(qName.compareTo("emailDest")==0)
         {
-            dernierARemplir = "mailDest";
+            dernierARemplir = "emailDest";
         }
         
-        if(qName.compareTo("mailExp")==0)
+        if(qName.compareTo("emailExp")==0)
         {
-            dernierARemplir = "mailExp";
+            dernierARemplir = "emailExp";
         }
         
         //Pour le type information
@@ -138,6 +138,11 @@ public class HandlerSAX extends DefaultHandler
         if(qName.compareTo("dateDebut")==0)
         {
             dernierARemplir = "dateDebut";
+        }
+        
+        if(qName.compareTo("dateFin")==0)
+        {
+            dernierARemplir = "dateFin";
         }
         
         //Pour le type autorisation
@@ -262,19 +267,21 @@ public class HandlerSAX extends DefaultHandler
             doc.setInstitution(new Institution(contenu));
         }
             
-        if(dernierARemplir.compareTo("mailDest")==0)
+        if(dernierARemplir.compareTo("emailDest")==0)
         {
             dernierARemplir = "";
-            //On fixe le mail du destinataire
+            //On ajoute le mail du destinataire
             message.addMailDest(contenu);
         }
         
-        if(dernierARemplir.compareTo("mailExp")==0)
+        if(dernierARemplir.compareTo("emailExp")==0)
         {
             dernierARemplir = "";
+            
             //On fixe le mail de l'expéditeur
             message.setMailExp(contenu);
         }
+        
         
         //Pour le type INFORMATION
         
@@ -296,6 +303,24 @@ public class HandlerSAX extends DefaultHandler
             information.setDateDebut(new SimpleDateFormat(contenu));
         }
         
+        if(dernierARemplir.compareTo("dateFin")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
+        {
+            dernierARemplir = "";
+            information.setDateDebut(new SimpleDateFormat(contenu));
+        }
+                
+        if(dernierARemplir.compareTo("semaines")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
+        {
+            dernierARemplir = "";
+            information.setDuree(contenu+" semaines");
+        }
+                
+        if(dernierARemplir.compareTo("mois")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
+        {
+            dernierARemplir = "";
+            information.setDuree(contenu+" mois");
+        }
+        
         //Pour le type DEMANDE
         
         if(dernierARemplir.compareTo("sujet")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
@@ -309,35 +334,56 @@ public class HandlerSAX extends DefaultHandler
             dernierARemplir = "";
             demande.setDateDebut(new SimpleDateFormat(contenu));
         }
-                
-    //    if(dernierARemplir.compareTo("duree")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
-    //    {
-    //        dernierARemplir = "";
-    //    }
+        
+        if(dernierARemplir.compareTo("dateFin")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
+        {
+            dernierARemplir = "";
+            demande.setDateDebut(new SimpleDateFormat(contenu));
+        }
+            
+        if(dernierARemplir.compareTo("semaines")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
+        {
+            dernierARemplir = "";
+            demande.setDuree(contenu+" semaines");
+        }  
+            
+        if(dernierARemplir.compareTo("mois")==0 && dernierTypeMessage==TypeMessage.DEMANDE)
+        {
+            dernierARemplir = "";
+            demande.setDuree(contenu+" mois");
+        }
+            
+        //Pour le type AUTORISATION
+        
+        if(dernierARemplir.compareTo("autorisationID")==0 && dernierTypeMessage==TypeMessage.AUTORISATION)
+        {
+            dernierARemplir = "";
+            //On fixe l'id de l'autorisation
+            autorisation.setId(contenu);
+        }
     
         if(dernierARemplir.compareTo("semaines")==0 && dernierTypeMessage==TypeMessage.AUTORISATION)
         {
             dernierARemplir = "";
             autorisation.setDuree(contenu+" semaines");
-        }
-        
-        if(dernierARemplir.compareTo("semaines")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
-        {
-            dernierARemplir = "";
-            information.setDuree(contenu+" semaines");
-        }
-        
+        }  
             
         if(dernierARemplir.compareTo("mois")==0 && dernierTypeMessage==TypeMessage.AUTORISATION)
+        {
+            dernierARemplir = "";
+            autorisation.setDuree(contenu+" mois");
+        }
+        
+        if(dernierARemplir.compareTo("dateDebut")==0 && dernierTypeMessage==TypeMessage.AUTORISATION)
         {
             dernierARemplir = "";
             autorisation.setDateDebut(new SimpleDateFormat(contenu));
         }
         
-        if(dernierARemplir.compareTo("mois")==0 && dernierTypeMessage==TypeMessage.INFORMATION)
+        if(dernierARemplir.compareTo("dateFin")==0 && dernierTypeMessage==TypeMessage.AUTORISATION)
         {
             dernierARemplir = "";
-            information.setDateDebut(new SimpleDateFormat(contenu));
+            autorisation.setDateDebut(new SimpleDateFormat(contenu));
         }
         
         //Pour le type REPONSE
