@@ -16,8 +16,12 @@ import data.TypeMessage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import parser.HandlerSAX;
@@ -182,11 +186,14 @@ public class Server
             switch (type)
             {
                 case AUTORISATION:
-                
+                    isValidDate(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree());
+                    System.out.println(m.getAutorisation().toString());
                     break;
                 
                 case DEMANDE:
+                    isValidDate(m.getDemande().getDateDebut(), m.getDemande().getDuree());
                     String sujetDemande = m.getDemande().getSujet();
+                    System.out.println(m.getDemande().toString());
                     if (sujetDemande.length()>100 || sujetDemande.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
@@ -202,7 +209,10 @@ public class Server
                     break;
                     
                 case INFORMATION :
+                    
+                    isValidDate(m.getInformation().getDateDebut(), m.getInformation().getDuree());
                     String sujetInfo = m.getInformation().getSujet();
+                    System.out.println(m.getInformation().toString());
                     if (sujetInfo.length()>100 || sujetInfo.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
@@ -218,6 +228,7 @@ public class Server
                     
                 case REPONSE :
                     String sujetReponse = m.getReponse().getSujet();
+                    System.out.println(m.getReponse().toString());
                     if (sujetReponse.length()>100 || sujetReponse.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
@@ -261,5 +272,42 @@ public class Server
         {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private boolean isValidDate(SimpleDateFormat date, String duree)
+    {
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        
+        Date d = new Date();
+        try
+        {
+            d = simpleFormat.parse(date.toPattern());
+        }
+        catch (ParseException e)
+        {
+            return false;
+        }
+        c.setTime(d);
+        
+        System.out.println("Avant : "+simpleFormat.format(c.getTime()));
+        
+        if (duree == null)
+            return true;
+        
+        if (duree.contains("semaine"))
+        {
+            int nbSemaine = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de semaines.
+            c.add(Calendar.DATE, nbSemaine*7);
+        }
+        
+        if (duree.contains("mois"))
+        {
+            int nbMois = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de mois.
+            c.add(Calendar.MONTH, nbMois);
+        }
+        
+        System.out.println("Après : "+simpleFormat.format(c.getTime()));
+        return true;
     }
 }
