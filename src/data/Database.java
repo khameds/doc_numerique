@@ -110,13 +110,14 @@ public class Database {
 	}
     }
     
-    public void insertIntoMessage(String content,String emissionDate)
+    public void insertIntoMessage(String subject,String content,String emissionDate)
     {
-	String sql = "INSERT INTO message(content, emissionDate) VALUES (?,?)";
+	String sql = "INSERT INTO message(subject, content, emissionDate) VALUES (?,?,?)";
 	try {
 	    PreparedStatement test = connection.prepareStatement(sql);
-	    test.setString(1,content);
-	    test.setString(2,emissionDate);
+	    test.setString(1,subject);
+	    test.setString(2,content);
+	    test.setString(3,emissionDate);
 	    test.execute();
 	    System.out.println("Add message success");
 	} catch (SQLException ex) {
@@ -204,8 +205,8 @@ public class Database {
 	    insertIntoInstitution("ENISE","ENISE@univ.fr");
 	    insertIntoInstitution("INFO","INFO@univ.fr");
 	    
-	    insertIntoMessage("Un super stage, chez vous!","2018-05-10");
-	    insertIntoMessage("Un super stage, de l'exterieur!","2018-06-09");
+	    insertIntoMessage("Stage","Un super stage, chez vous!","2018-05-10");
+	    insertIntoMessage("Stage","Un super stage, de l'exterieur!","2018-06-09");
 	    
 	    insertIntoTarget("1","mail2@univ.fr");
 	    insertIntoTarget("1","mail1@univ.fr");
@@ -224,7 +225,7 @@ public class Database {
 	try{
 	    statement.execute("CREATE TABLE IF NOT EXISTS institution (institutionid INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255) NOT NULL, mail VARCHAR(255));");
 	    statement.execute("CREATE TABLE IF NOT EXISTS mail (mailid VARCHAR(255) NOT NULL PRIMARY KEY , lastname VARCHAR(255) NOT NULL , firstname VARCHAR(255) NOT NULL);");
-	    statement.execute("CREATE TABLE IF NOT EXISTS message (messageid INT AUTO_INCREMENT PRIMARY KEY,content TEXT NOT NULL, emissionDate DATE);");
+	    statement.execute("CREATE TABLE IF NOT EXISTS message (messageid INT AUTO_INCREMENT PRIMARY KEY,subject VARCHER(255),content TEXT NOT NULL, emissionDate DATE);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS authorization (authorizationid VARCHAR PRIMARY KEY NOT NULL , institutionID INT NOT NULL , mailID VARCHAR(255) NOT NULL , endDate DATE);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS target (messageID INT NOT NULL, mailaddress VARCHAR(255) NOT NULL);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS externauthorization (institutionID INT NOT NULL, externauthoID VARCHAR NOT NULL, endDate DATE);");
