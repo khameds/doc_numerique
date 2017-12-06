@@ -56,6 +56,7 @@ public class Database {
 	String sql = "INSERT INTO institution(name,mail) VALUES (?,?)";
 	try {
 	    PreparedStatement test = connection.prepareStatement(sql);
+	    
 	    test.setString(1,nom);
 	    test.setString(2,mail);
 	    test.execute();
@@ -81,14 +82,15 @@ public class Database {
 	}
     }
     
-    public void insertIntoAuthorization(String institutionID,String mailID, String endDate)
+    public void insertIntoAuthorization(String id, String institutionID,String mailID, String endDate)
     {
-	String sql = "INSERT INTO authorization(institutionID, mailID,  endDate) VALUES (?,?,?)";
+	String sql = "INSERT INTO authorization(authorizationid,institutionID, mailID,  endDate) VALUES (?,?,?,?)";
 	try {
 	    PreparedStatement test = connection.prepareStatement(sql);
-	    test.setString(1,institutionID);
-	    test.setString(2,mailID);
-	    test.setString(3,endDate);
+	    test.setString(1,id);
+	    test.setString(2,institutionID);
+	    test.setString(3,mailID);
+	    test.setString(4,endDate);
 	    test.execute();
 	    System.out.println("Add Auth success");
 	} catch (SQLException ex) {
@@ -142,17 +144,44 @@ public class Database {
 	catch(SQLException e)
 	{
 	    System.out.println("Error : DROP TABLE");
-	    e.printStackTrace();
 	}
     }
     
+	public void addData()
+	{
+	    insertIntoMail("mail1@univ.fr","test1","test1");
+	    insertIntoMail("mail2@univ.fr","test2","test2");
+	    insertIntoMail("mail3@univ.fr","test3","test3");
+	    insertIntoMail("mail4@univ.fr","test4","test4");
+	    insertIntoMail("mail5@univ.fr","test5","test5");
+	    
+	    insertIntoMail("institution@univ.fr","NOTRE","INSTITUTION");
+	    
+	    insertIntoInstitution("UJM","UJM@univ.fr");
+	    insertIntoInstitution("ENISE","ENISE@univ.fr");
+	    insertIntoInstitution("INFO","INFO@univ.fr");
+	    
+	    insertIntoMessage("Un super stage, chez vous!","2018-05-10");
+	    insertIntoMessage("Un super stage, de l'exterieur!","2018-06-09");
+	    
+	    insertIntoTarget("1","mail2@univ.fr");
+	    insertIntoTarget("1","mail1@univ.fr");
+	    insertIntoTarget("2","mail3@univ.fr");
+	    
+	    insertIntoAuthorization("a1","1","mail1@univ.fr","2018-06-09");
+	    insertIntoAuthorization("a2","1","mail2@univ.fr","2018-06-09");
+	    insertIntoAuthorization("a3","2","mail1@univ.fr","2018-06-09");
+	    insertIntoAuthorization("a4","3","mail1@univ.fr","2018-06-09");
+	    insertIntoAuthorization("a5","3","mail3@univ.fr","2018-06-09");
+    
+	}
     
     public void createTableMail()
     {
 	try{
-	    statement.execute("CREATE TABLE IF NOT EXISTS institution (institutionid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,name VARCHAR(255) NOT NULL, mail VARCHAR(255));");
+	    statement.execute("CREATE TABLE IF NOT EXISTS institution (institutionid INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255) NOT NULL, mail VARCHAR(255));");
 	    statement.execute("CREATE TABLE IF NOT EXISTS mail (mailid VARCHAR(255) NOT NULL PRIMARY KEY , lastname VARCHAR(255) NOT NULL , firstname VARCHAR(255) NOT NULL);");
-	    statement.execute("CREATE TABLE IF NOT EXISTS message (messageid INT AUTO_INCREMENT PRIMARY KEY NOT NULL,content TEXT NOT NULL, emissionDate DATE);");
+	    statement.execute("CREATE TABLE IF NOT EXISTS message (messageid INT AUTO_INCREMENT PRIMARY KEY,content TEXT NOT NULL, emissionDate DATE);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS authorization (authorizationid VARCHAR PRIMARY KEY NOT NULL , institutionID INT NOT NULL , mailID INT NOT NULL , endDate DATE);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS target (messageID INT NOT NULL, mailaddress VARCHAR(255) NOT NULL);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS externauthorization (institutionID INT NOT NULL, externauthoID VARCHAR NOT NULL, endDate DATE);");
