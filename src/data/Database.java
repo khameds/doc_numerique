@@ -14,6 +14,49 @@ public class Database {
         DBPath = dBPath;
     }
     
+    
+    
+    public boolean checkAuthorization(int idInstitution,String idAuth,String mail )
+    {
+	String sql = "SELECT COUNT(authorizationid) FROM authorization WHERE authorizationid='"+ idAuth +"' AND institutionID='"+ idInstitution +"' AND mailID='"+ mail +"';";
+	try {
+	    ResultSet rs = statement.executeQuery(sql);
+	    
+	    while(rs.next())
+	    {
+		int count = rs.getInt("COUNT(authorizationid)");
+		if(count == 0)
+		    return false;
+		else
+		    return true;
+	    }
+
+	} catch (SQLException ex) {
+	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	
+	return false;
+    }
+    
+    public int GetInstitutionIDFromMail(String mail)
+    {
+	String sql = "SELECT institutionid FROM institution WHERE mail='"+mail+"';";
+	
+	try {
+	    ResultSet rs = statement.executeQuery(sql);
+	    int r = -1;
+	    while(rs.next())
+	    {
+		r = rs.getInt("institutionid");
+	    }
+	    return r;
+	} catch (SQLException ex) {
+	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	return -1;
+    }
+    
+    
     public boolean mailExist(String mail)
     {
 	String sql = "SELECT COUNT(mailid) FROM mail WHERE mailid='" + mail +"';";
@@ -168,11 +211,11 @@ public class Database {
 	    insertIntoTarget("1","mail1@univ.fr");
 	    insertIntoTarget("2","mail3@univ.fr");
 	    
-	    insertIntoAuthorization("a1","1","mail1@univ.fr","2018-06-09");
-	    insertIntoAuthorization("a2","1","mail2@univ.fr","2018-06-09");
-	    insertIntoAuthorization("a3","2","mail1@univ.fr","2018-06-09");
-	    insertIntoAuthorization("a4","3","mail1@univ.fr","2018-06-09");
-	    insertIntoAuthorization("a5","3","mail3@univ.fr","2018-06-09");
+	    insertIntoAuthorization("a1","0","mail1@univ.fr","2018-06-09");
+	    insertIntoAuthorization("a2","0","mail2@univ.fr","2018-06-09");
+	    insertIntoAuthorization("a3","1","mail1@univ.fr","2018-06-09");
+	    insertIntoAuthorization("a4","2","mail1@univ.fr","2018-06-09");
+	    insertIntoAuthorization("a5","2","mail3@univ.fr","2018-06-09");
     
 	}
     
@@ -182,7 +225,7 @@ public class Database {
 	    statement.execute("CREATE TABLE IF NOT EXISTS institution (institutionid INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255) NOT NULL, mail VARCHAR(255));");
 	    statement.execute("CREATE TABLE IF NOT EXISTS mail (mailid VARCHAR(255) NOT NULL PRIMARY KEY , lastname VARCHAR(255) NOT NULL , firstname VARCHAR(255) NOT NULL);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS message (messageid INT AUTO_INCREMENT PRIMARY KEY,content TEXT NOT NULL, emissionDate DATE);");
-	    statement.execute("CREATE TABLE IF NOT EXISTS authorization (authorizationid VARCHAR PRIMARY KEY NOT NULL , institutionID INT NOT NULL , mailID INT NOT NULL , endDate DATE);");
+	    statement.execute("CREATE TABLE IF NOT EXISTS authorization (authorizationid VARCHAR PRIMARY KEY NOT NULL , institutionID INT NOT NULL , mailID VARCHAR(255) NOT NULL , endDate DATE);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS target (messageID INT NOT NULL, mailaddress VARCHAR(255) NOT NULL);");
 	    statement.execute("CREATE TABLE IF NOT EXISTS externauthorization (institutionID INT NOT NULL, externauthoID VARCHAR NOT NULL, endDate DATE);");
 	    

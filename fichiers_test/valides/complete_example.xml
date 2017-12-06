@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Fichier de Test :
   Cible : Validation de la syntaxe et de la semantique du fichier
@@ -72,8 +71,8 @@
             </autorisation>
         </message>
         <message messageId="m6">
-            <emailDest>institution@univ.fr</emailDest>
-            <emailExp>azerty@ee.el</emailExp>
+            <emailDest>mail1@univ.fr</emailDest>
+            <emailExp>UJM@univ.fr</emailExp>
             <demande authId="a1">
                 <sujet>une demande</sujet>
                 <dateDebut>2018-01-01</dateDebut>

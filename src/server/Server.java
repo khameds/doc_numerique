@@ -216,7 +216,7 @@ public class Server
                         reject = true;
                     }
                     
-		    if (listDest.size()!=0 || doc.getListeMessage().get(i).getMailExp()==null)
+		    if (listDest.size()<1 || doc.getListeMessage().get(i).getMailExp()==null)
 		    {
 			System.err.println("La demande "+id+" n'est pas valide. Il doit y avoir 1 mail expéditeur et au moins 1 mail destinataire.");
                         reject = true;
@@ -235,6 +235,25 @@ public class Server
                         System.err.println("Le contenu du message "+id+" ne respecte pas le nombre de caratère.");
                         reject = true;
                     }
+		    
+		    database.connect();
+		    int  idInstitution = database.GetInstitutionIDFromMail(doc.getListeMessage().get(i).getMailExp());
+		    if(idInstitution == -1)
+		    {
+			System.err.println("L'institution exterieure de "+id+" est inconnue!");
+                        reject = true;
+		    }
+		    String idAuth = m.getDemande().getAuthId();
+		    for (int j=0; j<listDest.size(); j++)
+		    {
+			if(!database.checkAuthorization(idInstitution,idAuth,listDest.get(j)))
+			{
+			    System.err.println("L'autorisation de"+id+" n'est pas bonne");
+			    reject = true;
+			}
+		    }
+		    database.close();
+		    //for each dest, check if authorization is good
                     
                     break;
                     
