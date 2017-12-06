@@ -290,7 +290,7 @@ public class Server
 		    {
 			if(!database.checkAuthorization(idInstitution,idAuth,listDest.get(j)))
 			{
-			    System.err.println("L'autorisation de"+id+" n'est pas bonne");
+			    System.err.println("L'autorisation de "+id+" n'est pas bonne");
 			    response += "\t<error>L'institution exterieure n'a pas la bonne autorisation!</error>\n";
 			    reject = true;
 			}
