@@ -172,7 +172,7 @@ public class Server
             {
                 for (int j=0; j<listDest.size(); j++)
                 {
-		    if(!database.mailExist(listDest.get(i)))
+		    if(!database.mailExist(listDest.get(j)))
 		    {
                         System.err.println("Le mail est inexistant");
 			reject = true;
@@ -193,6 +193,11 @@ public class Server
             switch (type)
             {
                 case AUTORISATION:
+                    if (listDest.size()!=1 || doc.getListeMessage().get(i).getMailExp()==null)
+                    {
+                        System.err.println("L'autorisation "+id+" n'est pas valide. Il doit y avoir 1 mail expéditeur et 1 mail destinataire.");
+                        reject = true;
+                    }
                     
                     if ( ! isValidDate(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree()))
                     {
