@@ -16,8 +16,12 @@ import data.TypeMessage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import parser.HandlerSAX;
@@ -86,7 +90,7 @@ public class Server
 	    database.dropTable();
 	    database.createTableMail();
 	    
-	    //database.insertIntoMail("test","test","test");
+	    database.insertIntoMail("test","test","test",1);
 	    }
         catch (IOException e)
         {
@@ -157,6 +161,7 @@ public class Server
      */
     private String consideration(Document doc)
     {
+        System.out.println(doc.toString());
         for (int i=0; i<doc.getNombreMessage(); i++)
         {
             Message m = doc.getMessage(i);
@@ -182,11 +187,26 @@ public class Server
             switch (type)
             {
                 case AUTORISATION:
-                
+                    
+                    if ( ! isValidDate(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree()))
+                    {
+                        System.err.println("La date du message "+id+" n'est pas valide");
+                        reject = true;
+                    }
+                    isValidDate(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree());
+
                     break;
                 
                 case DEMANDE:
+                    
+                    if ( ! isValidDate(m.getDemande().getDateDebut(), m.getDemande().getDuree()))
+                    {
+                        System.err.println("La date du message "+id+" n'est pas valide");
+                        reject = true;
+                    }
+                    
                     String sujetDemande = m.getDemande().getSujet();
+
                     if (sujetDemande.length()>100 || sujetDemande.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
@@ -202,7 +222,14 @@ public class Server
                     break;
                     
                 case INFORMATION :
+                    
+                    if ( ! isValidDate(m.getInformation().getDateDebut(), m.getInformation().getDuree()))
+                    {
+                        System.err.println("La date du message "+id+" n'est pas valide");
+                        reject = true;
+                    }
                     String sujetInfo = m.getInformation().getSujet();
+
                     if (sujetInfo.length()>100 || sujetInfo.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
@@ -217,7 +244,9 @@ public class Server
                     break;
                     
                 case REPONSE :
+                    
                     String sujetReponse = m.getReponse().getSujet();
+
                     if (sujetReponse.length()>100 || sujetReponse.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
@@ -230,6 +259,14 @@ public class Server
                         reject = true;
                     }
                     break;
+            }
+            if (!reject)
+            {
+                System.out.println("Il faut ajouter le message à la BDD");
+            }
+            else 
+            {
+                System.out.println("Le message "+ id + "va être supprimer.");
             }
         }
         
@@ -261,5 +298,62 @@ public class Server
         {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private boolean isValidDate(SimpleDateFormat date, String duree)
+    {
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        
+        Date d = new Date();
+        try
+        {
+            if (date != null)
+                d = simpleFormat.parse(date.toPattern());
+            else
+                return false;
+        }
+        catch (ParseException e)
+        {
+            return false;
+        }
+        c.setTime(d);
+        
+        Calendar dateDebut = (Calendar) c.clone();
+        
+        System.out.println("Date début : "+simpleFormat.format(c.getTime()));
+        
+        if (duree == null)
+            return true;
+        
+        if (duree.contains("semaine"))
+        {
+            int nbSemaine = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de semaines.
+            c.add(Calendar.DATE, nbSemaine*7);
+        }
+        
+        if (duree.contains("mois"))
+        {
+            int nbMois = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de mois.
+            c.add(Calendar.MONTH, nbMois);
+        }
+        System.out.println("Date fin : "+simpleFormat.format(c.getTime()));
+        
+        Calendar dateFin = c;
+        
+        Calendar aujourdhui = Calendar.getInstance();
+        
+        if (dateFin.compareTo(aujourdhui) == -1) //Date de fin est passée
+            return false;
+        
+        aujourdhui.add(Calendar.MONTH, 6);
+        
+        System.out.println("Date dans 6 mois : "+simpleFormat.format(aujourdhui.getTime()));
+        
+        if (dateDebut.compareTo(aujourdhui) == 1) //Date de début est trop tard
+            return false;
+        
+
+        return true;
     }
 }
