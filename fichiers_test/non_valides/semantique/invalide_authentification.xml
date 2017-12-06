@@ -14,7 +14,7 @@ Résultat attendu : Le message doit être rejeté.
         <institution>L'institution</institution>
     </header>
     <collMess>
-        <message>
+        <message messageId="m1">
             <emailDest>mail1@univ.fr</emailDest>
             <emailExp>jacquie@michel.fr</emailExp>
             <demande authId="azerty!">
