@@ -377,8 +377,6 @@ public class Server
         
         Calendar dateDebut = (Calendar) c.clone();
         
-        System.out.println("Date début : "+simpleFormat.format(c.getTime()));
-        
         if (duree == null)
             return true;
         
@@ -393,7 +391,6 @@ public class Server
             int nbMois = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de mois.
             c.add(Calendar.MONTH, nbMois);
         }
-        System.out.println("Date fin : "+simpleFormat.format(c.getTime()));
         
         Calendar dateFin = c;
         
@@ -403,8 +400,6 @@ public class Server
             return false;
         
         aujourdhui.add(Calendar.MONTH, 6);
-        
-        System.out.println("Date dans 6 mois : "+simpleFormat.format(aujourdhui.getTime()));
         
         if (dateDebut.compareTo(aujourdhui) == 1) //Date de début est trop tard
             return false;
