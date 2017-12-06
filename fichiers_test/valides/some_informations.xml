@@ -15,7 +15,7 @@ Résultat attendu : Fichier validé par le parser SAX.
     </header>
     <collMess>
         <message messageId="m1">
-        <emailDest>marc@dorcel.fr</emailDest>
+        <emailDest>mail1@univ.fr</emailDest>
         <emailExp>jacquie@michel.fr</emailExp>
         <information>
             <sujet>Michel</sujet>
@@ -27,8 +27,8 @@ Résultat attendu : Fichier validé par le parser SAX.
         </information>
     </message>
         <message messageId="m2">
-        <emailDest>marc@dorcel.fr</emailDest>
-        <emailDest>marc.bernard@dorcel.fr</emailDest>
+        <emailDest>mail2@univ.fr</emailDest>
+        <emailDest>mail3@univ.fr</emailDest>
         <emailExp>jacquie@michel.fr</emailExp>
             <information>
                 <sujet>Michel</sujet>
