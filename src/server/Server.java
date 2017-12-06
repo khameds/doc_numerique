@@ -161,6 +161,7 @@ public class Server
      */
     private String consideration(Document doc)
     {
+        System.out.println(doc.toString());
         for (int i=0; i<doc.getNombreMessage(); i++)
         {
             Message m = doc.getMessage(i);
@@ -186,14 +187,26 @@ public class Server
             switch (type)
             {
                 case AUTORISATION:
+                    
+                    if ( ! isValidDate(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree()))
+                    {
+                        System.err.println("La date du message "+id+" n'est pas valide");
+                        reject = true;
+                    }
                     isValidDate(m.getAutorisation().getDateDebut(), m.getAutorisation().getDuree());
-                    System.out.println(m.getAutorisation().toString());
+
                     break;
                 
                 case DEMANDE:
-                    isValidDate(m.getDemande().getDateDebut(), m.getDemande().getDuree());
+                    
+                    if ( ! isValidDate(m.getDemande().getDateDebut(), m.getDemande().getDuree()))
+                    {
+                        System.err.println("La date du message "+id+" n'est pas valide");
+                        reject = true;
+                    }
+                    
                     String sujetDemande = m.getDemande().getSujet();
-                    System.out.println(m.getDemande().toString());
+
                     if (sujetDemande.length()>100 || sujetDemande.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
@@ -210,9 +223,13 @@ public class Server
                     
                 case INFORMATION :
                     
-                    isValidDate(m.getInformation().getDateDebut(), m.getInformation().getDuree());
+                    if ( ! isValidDate(m.getInformation().getDateDebut(), m.getInformation().getDuree()))
+                    {
+                        System.err.println("La date du message "+id+" n'est pas valide");
+                        reject = true;
+                    }
                     String sujetInfo = m.getInformation().getSujet();
-                    System.out.println(m.getInformation().toString());
+
                     if (sujetInfo.length()>100 || sujetInfo.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
@@ -227,8 +244,9 @@ public class Server
                     break;
                     
                 case REPONSE :
+                    
                     String sujetReponse = m.getReponse().getSujet();
-                    System.out.println(m.getReponse().toString());
+
                     if (sujetReponse.length()>100 || sujetReponse.length()<2)
                     {
                         System.err.println("Le sujet du message "+id+" ne respecte pas le nombre de caratère.");
@@ -241,6 +259,14 @@ public class Server
                         reject = true;
                     }
                     break;
+            }
+            if (!reject)
+            {
+                System.out.println("Il faut ajouter le message à la BDD");
+            }
+            else 
+            {
+                System.out.println("Le message "+ id + "va être supprimer.");
             }
         }
         
@@ -282,7 +308,10 @@ public class Server
         Date d = new Date();
         try
         {
-            d = simpleFormat.parse(date.toPattern());
+            if (date != null)
+                d = simpleFormat.parse(date.toPattern());
+            else
+                return false;
         }
         catch (ParseException e)
         {
@@ -290,7 +319,9 @@ public class Server
         }
         c.setTime(d);
         
-        System.out.println("Avant : "+simpleFormat.format(c.getTime()));
+        Calendar dateDebut = (Calendar) c.clone();
+        
+        System.out.println("Date début : "+simpleFormat.format(c.getTime()));
         
         if (duree == null)
             return true;
@@ -306,8 +337,23 @@ public class Server
             int nbMois = Integer.parseInt(duree.split(" ")[0]); //On récupère le nombre de mois.
             c.add(Calendar.MONTH, nbMois);
         }
+        System.out.println("Date fin : "+simpleFormat.format(c.getTime()));
         
-        System.out.println("Après : "+simpleFormat.format(c.getTime()));
+        Calendar dateFin = c;
+        
+        Calendar aujourdhui = Calendar.getInstance();
+        
+        if (dateFin.compareTo(aujourdhui) == -1) //Date de fin est passée
+            return false;
+        
+        aujourdhui.add(Calendar.MONTH, 6);
+        
+        System.out.println("Date dans 6 mois : "+simpleFormat.format(aujourdhui.getTime()));
+        
+        if (dateDebut.compareTo(aujourdhui) == 1) //Date de début est trop tard
+            return false;
+        
+
         return true;
     }
 }
