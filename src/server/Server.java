@@ -116,8 +116,14 @@ public class Server
         doc = new Document();
 
         //Vérification XSD du fichier
-        Validating.validate(pathToXSD, pathToXMLFile);
+        Boolean xsdValidated = Validating.validate(pathToXSD, pathToXMLFile);
 
+        if(!xsdValidated)
+        {
+            System.err.println("ERREUR: Le fichier XML ne valide pas la XSD");
+            return;
+        }
+        
         //On parse le XML
         HandlerSAX handlerFile = new HandlerSAX(doc);
         parser.monParsing(handlerFile, pathToXMLFile);
