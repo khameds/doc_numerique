@@ -341,7 +341,14 @@ public class Server
 		    if(reject!=true)
 		    {
 			database.connect();
-			database.addMessage(sujetInfo,contenuInfo,m.getInformation().getDateDebut().toPattern());
+                        if (m.getInformation().getDateDebut()!=null)
+                            database.addMessage(sujetInfo,contenuInfo,m.getInformation().getDateDebut().toPattern());
+                        else
+                        {
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            Date d = new Date();
+                            database.addMessage(sujetInfo,contenuInfo,format.format(d));
+                        } 
 			database.close();
 		    }
                     break;
