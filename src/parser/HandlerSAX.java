@@ -269,8 +269,6 @@ public class HandlerSAX extends DefaultHandler
             
         if(dernierARemplir.compareTo("emailDest")==0)
         {
-            System.out.println("("+dernierARemplir+")AJOUT DE MAIL DEST ="+contenu);
-            
             dernierARemplir = "";
             //On ajoute le mail du destinataire
             message.addMailDest(contenu);
@@ -278,8 +276,6 @@ public class HandlerSAX extends DefaultHandler
         
         if(dernierARemplir.compareTo("emailExp")==0)
         {
-            System.out.println("("+dernierARemplir+")SET DE MAIL EX ="+contenu);
-            
             dernierARemplir = "";
             
             //On fixe le mail de l'expéditeur
