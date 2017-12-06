@@ -5,7 +5,7 @@
   Résultat attendu : Fichier rejeté car multiple déclaration de "collMess"
 -->
 
-<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../fichiers_definitions/definition.xsd">
 
     <header fileId="f2">
         <nbMessages>2</nbMessages>
@@ -13,12 +13,12 @@
     </header>
     <collMess>
         <message messageId="m1">
-            <emailExp>jacquie@michel.fr</emailExp>
+            <emailExp>mail1@univ.fr</emailExp>
             <emailDest>marc@dorcel.fr</emailDest>
             <information>
                 <sujet>Michel</sujet>
                 <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
-                <dateDebut>1/1/2018</dateDebut>
+                <dateDebut>2018-01-01</dateDebut>
                 <duree>
                     <semaines>1</semaines>
                 </duree>
@@ -27,14 +27,14 @@
     </collMess>
     <collMess>
         <message messageId="m2">
-            <emailDest>jacquie@michel.fr</emailDest>
+            <emailDest>mail3@univ.fr</emailDest>
             <emailExp>marc@dorcel.fr</emailExp>
             <information>
                 <sujet>PTDQ</sujet>
                 <contenuTexte>Salut, ca marche</contenuTexte>
-                <dateDebut>1/1/2018</dateDebut>
+                <dateDebut>2018-01-01</dateDebut>
                 <duree>
-                    <semaines>1</semaines>
+                    <semaines>3</semaines>
                 </duree>
             </information>
         </message>

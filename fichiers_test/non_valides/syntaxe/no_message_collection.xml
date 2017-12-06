@@ -5,10 +5,10 @@
   Résultat attendu : Fichier rejeté car le noeud "collMess" est absent
 -->
 
-<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+<fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../fichiers_definitions/definition.xsd">
 
     <header fileId="f1">
-        <nbMessages>1</nbMessages>
+        <nbMessages>0</nbMessages>
         <institution>L'institution</institution>
     </header>
 </fichier>

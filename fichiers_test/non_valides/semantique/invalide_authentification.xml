@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- Fichier de Test :
-Cible : Detection de taille minimal de contenu
-Test : Definition d'un fichier coontenant un message d'information dont le contenu fait un caractère.
+Cible : Detection de d'identifiant d'autentification invalides
+Test : Definition d'un fichier contenant un message de demande avec une autentification inconnue.
 Résultat attendu : Le message doit être rejeté.
 -->
 
 <fichier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="../../fichiers_definitions/definition.xsd">
+         xsi:noNamespaceSchemaLocation="../../../fichiers_definitions/definition.xsd">
 
     <header fileId="f1">
         <nbMessages>1</nbMessages>
         <institution>L'institution</institution>
     </header>
     <collMess>
-        <message messageId="m1">
+        <message>
             <emailDest>mail1@univ.fr</emailDest>
             <emailExp>jacquie@michel.fr</emailExp>
-            <information>
-                <sujet>Michel</sujet>
-                <contenuTexte>S</contenuTexte>
+            <demande authId="azerty!">
+                <sujet>authID invalide</sujet>
                 <dateDebut>2018-01-01</dateDebut>
                 <duree>
-                    <semaines>1</semaines>
+                    <semaines>3</semaines>
                 </duree>
-            </information>
+            </demande>
         </message>
     </collMess>
 </fichier>
