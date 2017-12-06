@@ -2,6 +2,7 @@ package data;
 
 import java.sql.*;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -157,6 +158,54 @@ public class Database {
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
+    
+    public int selectIDMessage(String subject, String content,String emissionDate)
+    {
+	System.out.println(subject + "+++" + content);
+	String sql = "SELECT messageid FROM message WHERE subject='" + subject + "' + content ='"+ content +"';";
+	try {
+	    ResultSet rs = statement.executeQuery(sql);
+	    while(rs.next())
+	    {
+		
+		return rs.getInt("messageid");
+	    }
+	} catch (SQLException ex) {
+	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	return -1;
+    }
+    
+    public void addMessage(String subject, String content,String emissionDate)
+    {
+	
+	insertIntoMessage(subject,content,emissionDate);
+	int id = selectIDMessage(subject,content,emissionDate);
+	String sql = "SELECT mailid FROM mail;";
+	try {
+	    
+	    ResultSet rs = statement.executeQuery(sql);
+	    while(rs.next())
+	    {
+		insertIntoTarget(""+id,rs.getString("mailid"));
+	    }
+	} catch (SQLException ex) {
+	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+	}
+    }
+    
+    public void addMessageDemande(String subject,String emissionDate,List<String> listDest)
+    {
+	
+	insertIntoMessage("",subject,emissionDate);
+	int id = selectIDMessage("",subject,emissionDate);
+	for (int j=0; j<listDest.size(); j++)
+        {
+	    insertIntoTarget(""+id,listDest.get(j));
+        }
+	
+    }
+    
     
     public void insertIntoExtern(String institutionID,String externauthoID, String endDate)
     {
