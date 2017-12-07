@@ -19,7 +19,7 @@ Résultat attendu : Fichier validé par le parser SAX.
         <emailExp>jacquie@michel.fr</emailExp>
         <information>
             <sujet>Michel</sujet>
-            <contenuTexte>Salut, j'aimerais avoir michel pour un tournage</contenuTexte>
+            <contenuTexte>Salut, j aimerais avoir michel pour un tournage</contenuTexte>
             <dateDebut>2018-01-01</dateDebut>
             <duree>
                 <semaines>1</semaines>
@@ -42,7 +42,7 @@ Résultat attendu : Fichier validé par le parser SAX.
         <message messageId="m3">
             <information>
                 <sujet>Toujours Michel</sujet>
-                <contenuTexte>Il a chopé un truc, il est sous antibiotique, c pas génant?</contenuTexte>
+                <contenuTexte>Il a chope un truc, il est sous antibiotique, c pas genant?</contenuTexte>
                 <dateDebut>2018-01-01</dateDebut>
                 <duree>
                     <semaines>1</semaines>
@@ -52,7 +52,7 @@ Résultat attendu : Fichier validé par le parser SAX.
         <message messageId="m4">
             <information>
                 <sujet>toujours plus de Michel</sujet>
-                <contenuTexte>Ouep osef, l'autre est toute bouffée de l'interieur aussi...</contenuTexte>
+                <contenuTexte>Ouep osef, l autre est toute bouffee de l interieur aussi...</contenuTexte>
                 <dateDebut>2018-01-01</dateDebut>
                 <duree>
                     <semaines>1</semaines>

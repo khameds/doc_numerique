@@ -15,35 +15,35 @@
     <collMess>
         <message messageId="m1">
             <emailDest>mail1@univ.fr</emailDest>
-            <emailExp>jean@michel.fr</emailExp>
+            <emailExp>mail2@univl.fr</emailExp>
             <information>
-                <sujet>Michel</sujet>
-                <contenuTexte>Salut, jaimerais avoir michel pour un tournage</contenuTexte>
+                <sujet>Offre de stage</sujet>
+                <contenuTexte>Nous recherchons un stagiaire dans le domaine informatique : Gestion de document numerique</contenuTexte>
                 <dateDebut>2018-01-01</dateDebut>
                 <duree>
-                    <semaines>1</semaines>
+                    <semaines>6</semaines>
                 </duree>
             </information>
         </message>
         <message messageId="m2">
             <emailDest>mail1@univ.fr</emailDest>
             <emailDest>mail2@univ.fr</emailDest>
-            <emailExp>jean2@michel.fr</emailExp>
+            <emailExp>mail3@univ.fr</emailExp>
             <information>
-                <sujet>Michel</sujet>
-                <contenuTexte>Salut, il participera au tournage!</contenuTexte>
-                <dateDebut>2018-01-01</dateDebut>
+                <sujet>Conferences</sujet>
+                <contenuTexte>Des conferences sur la Machine de Peano seront organisees dans le hall de telecom</contenuTexte>
+                <dateDebut>2018-01-16</dateDebut>
                 <duree>
                     <semaines>1</semaines>
                 </duree>
             </information>
         </message>
         <message messageId="m3">
-            <emailDest>institution@univ.fr</emailDest>
-            <emailExp>jean@michel.fr</emailExp>
-            <demande authId="a10">
-                <sujet>sujet de la demande 1</sujet>
-                <dateDebut>2018-01-01</dateDebut>
+            <emailDest>mail2@univ.fr</emailDest>
+            <emailExp>UJM@univ.fr</emailExp>
+            <demande authId="a2">
+                <sujet>Demande de diffusion du message</sujet>
+                <dateDebut>2018-02-01</dateDebut>
                 <duree>
                     <mois>2</mois>
                 </duree>
@@ -51,18 +51,18 @@
         </message>
         <message messageId="m4">
             <emailDest>institution@univ.fr</emailDest>
-            <emailExp>azerty@ee.el</emailExp>
+            <emailExp>mail2@univ.fr</emailExp>
             <autorisation>
                 <autorisationID>a10</autorisationID>
                 <dateDebut>2017-12-01</dateDebut>
                 <duree>
-                    <mois>3</mois>
+                    <mois>7</mois>
                 </duree>
             </autorisation>
         </message>
         <message messageId="m5">
             <emailDest>mail1@univ.fr</emailDest>
-            <emailExp>eeeee@eez.el</emailExp>
+            <emailExp>mail2@univ.fr</emailExp>
             <autorisation>
                 <autorisationID>a12345</autorisationID>
                 <dateDebut>2017-11-01</dateDebut>
@@ -75,7 +75,7 @@
             <emailDest>mail1@univ.fr</emailDest>
             <emailExp>UJM@univ.fr</emailExp>
             <demande authId="a1">
-                <sujet>une demande</sujet>
+                <sujet>Une demande directe</sujet>
                 <dateDebut>2018-01-01</dateDebut>
                 <duree>
                     <semaines>3</semaines>
