@@ -168,7 +168,6 @@ public class Server
     private String consideration(Document doc)
     {
 	String response = "";
-        System.out.println(doc.toString());
         for (int i=0; i<doc.getNombreMessage(); i++)
         {
 	    
@@ -372,7 +371,7 @@ public class Server
             }
             if (!reject)
             {
-                System.out.println("Il faut ajouter le message à la BDD");
+                System.out.println("Il faut ajouter le message "+ id +" à la BDD");
 		response += "\t<succes>Le message est bon!</succes>\n</message>\n";
             }
             else 
@@ -393,10 +392,7 @@ public class Server
      * @param outputXMLFile Le XML en String
      */
     private void writeResponse(String outputXMLFile)
-    {
-        System.out.println("OUTPUT XML = " + outputXMLFile); //TEMPORAIRE
-        //Il faudra écrire ça dans un fichier de sortie
-        
+    {   
         try
         {
             FileOutputStream fos = new FileOutputStream(new File("OutputFolder/"+new Date().toString().replace(":", "-")+".xml")); //Le nom du fichier de sortie est la date

@@ -88,7 +88,6 @@ public class Database {
 	    test.setString(2,lastname);
 	    test.setString(3,firstname);
 	    test.execute();
-	    System.out.println("Add mail success");
 	} catch (SQLException ex) {
 	    System.out.println("insertIntoMail fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,7 +103,6 @@ public class Database {
 	    test.setString(1,nom);
 	    test.setString(2,mail);
 	    test.execute();
-	    System.out.println("Add Institution success");
 	} catch (SQLException ex) {
 	    System.out.println("insertIntoInstitution fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,9 +118,7 @@ public class Database {
 	    test.setString(2,content);
 	    test.setString(3,emissionDate);
 	    test.execute();
-	    System.out.println("Add message success");
 	} catch (SQLException ex) {
-	    System.out.println("insertIntoMessage fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
@@ -137,9 +133,7 @@ public class Database {
 	    test.setString(3,mailID);
 	    test.setString(4,endDate);
 	    test.execute();
-	    System.out.println("Add Auth success");
 	} catch (SQLException ex) {
-	    System.out.println("insertIntoAuth fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
@@ -152,16 +146,13 @@ public class Database {
 	    test.setString(1,messageID);
 	    test.setString(2,mailaddress);
 	    test.execute();
-	    System.out.println("Add target success");
 	} catch (SQLException ex) {
-	    System.out.println("insertTarget fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
     
     public int selectIDMessage(String subject, String content,String emissionDate)
     {
-	System.out.println(subject + "+++" + content);
 	String sql = "SELECT messageid FROM message WHERE subject='" + subject + "' + content ='"+ content +"';";
 	try {
 	    ResultSet rs = statement.executeQuery(sql);
@@ -216,9 +207,7 @@ public class Database {
 	    test.setString(2,externauthoID);
 	    test.setString(3,endDate);
 	    test.execute();
-	    System.out.println("Add extern auth success");
 	} catch (SQLException ex) {
-	    System.out.println("insertIntoExtern fail");
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
@@ -280,11 +269,9 @@ public class Database {
 	    statement.execute("CREATE TABLE IF NOT EXISTS externauthorization (institutionID INT NOT NULL, externauthoID VARCHAR NOT NULL, endDate DATE);");
 	    
 	    
-	    System.out.println("Create table successfull!!");
 	}
 	catch(SQLException e)
 	{
-	    System.out.println("Error : create table");
 	    e.printStackTrace();
 	}
     }
@@ -294,7 +281,6 @@ public class Database {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
             statement = connection.createStatement();
-            System.out.println("Successfully connected to " + DBPath + " !");
 	    
 	} catch (ClassNotFoundException notFoundException) {
             notFoundException.printStackTrace();
