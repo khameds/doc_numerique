@@ -16,8 +16,8 @@ Résultat attendu : Le message doit être rejeté.
     <collMess>
         <message messageId="m1">
             <emailDest>mail1@univ.fr</emailDest>
-            <emailExp>jacquie@michel.fr</emailExp>
-            <demande authId="azerty!">
+            <emailExp>UJM@univ.fr</emailExp>
+            <demande authId="azerty">
                 <sujet>authID invalide</sujet>
                 <dateDebut>2018-01-01</dateDebut>
                 <duree>
